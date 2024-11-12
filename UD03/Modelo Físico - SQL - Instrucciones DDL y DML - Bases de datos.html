@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Modelo Físico - SQL - Instrucciones DDL y DML - Bases de datos.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="modelo-f%C3%ADsico-sql---instrucciones-ddl-y-dml-a-id%22modelo-fisico-sql-instrucciones-ddl-y-dml%22a"><strong>Modelo Físico: SQL - Instrucciones DDL y DML</strong> <a id="modelo-fisico-sql-instrucciones-ddl-y-dml"></a></h1>
+<h2 id="propuesta-did%C3%A1ctica-a-id%22propuesta-didactica%22a"><strong>Propuesta didáctica</strong> <a id="propuesta-didactica"></a></h2>
+<p>Una vez conocido el modelo relacional, en esta unidad vamos a comenzar a trabajar el RA2 &quot;<strong>Crea bases de datos definiendo su estructura y las características de sus elementos según el modelo relacional</strong>&quot;, además de continuar con el RA5 &quot;<strong>Modifica la información almacenada en la base de datos utilizando asistentes, herramientas gráficas y el lenguaje de manipulación de datos</strong>&quot;.</p>
+<h3 id="criterios-de-evaluaci%C3%B3n-a-id%22criterios-de-evaluacion%22a"><strong>Criterios de evaluación</strong> <a id="criterios-de-evaluacion"></a></h3>
+<p>Respecto al RA2:</p>
+<ul>
+<li><strong>CE2a</strong>: Se ha analizado el formato de almacenamiento de la información.</li>
+<li><strong>CE2b</strong>: Se han creado las tablas y las relaciones entre ellas.</li>
+<li><strong>CE2c</strong>: Se han seleccionado los tipos de datos adecuados.</li>
+<li><strong>CE2d</strong>: Se han definido los campos clave en las tablas.</li>
+<li><strong>CE2e</strong>: Se han implantado las restricciones reflejadas en el diseño lógico.</li>
+</ul>
+<p>Respecto al RA4:</p>
+<ul>
+<li><strong>CE4a</strong>: Se han identificado las herramientas y sentencias para modificar el contenido de la base de datos.</li>
+<li><strong>CE4b</strong>: Se han insertado, borrado y actualizado datos en las tablas.</li>
+</ul>
+<h3 id="contenidos-a-id%22contenidos%22a"><strong>Contenidos</strong> <a id="contenidos"></a></h3>
+<p>Bases de datos relacionales:</p>
+<ul>
+<li>Lenguaje de descripción de datos (DDL).</li>
+</ul>
+<p>Tratamiento de datos:</p>
+<ul>
+<li>Inserción, borrado y modificación de registros.</li>
+<li>Integridad referencial.</li>
+</ul>
+<p>Cuestionario inicial</p>
+<ol>
+<li>¿Cuál es el propósito de las sentencias DDL?</li>
+<li>¿Y DML?</li>
+<li>¿Cómo averiguamos tanto las tablas de una base de datos como su estructura?</li>
+<li>¿Para qué sirve el comando CREATE TABLE?</li>
+<li>¿Qué diferencia CREATE TYPE de CREATE DOMAIN?</li>
+<li>¿Puedo eliminar las tablas en cualquier orden mediante DROP TABLE?</li>
+<li>¿Es obligatorio que una clave ajena siempre referencie a una clave primaria?</li>
+<li>¿Para qué sirve el comando INSERT INTO?</li>
+<li>¿Qué sucede si omitimos el WHERE en un DELETE FROM?</li>
+</ol>
+<h3 id="programaci%C3%B3n-de-aula-11h-a-id%22programacion-de-aula%22a"><strong>Programación de Aula (11h)</strong> <a id="programacion-de-aula"></a></h3>
+<p>Esta unidad es la quinta, con lo que se imparte en la primera evaluación, a finales del mes de noviembre, con una duración estimada de 11 sesiones lectivas:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>Sesión</strong></th>
+<th style="text-align:center"><strong>Contenidos</strong></th>
+<th style="text-align:center"><strong>Actividades</strong></th>
+<th style="text-align:center"><strong>Criterios trabajados</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><a href="#modelo-fisico">Modelo físico</a>. Puesta en marcha</td>
+<td style="text-align:center"><a href="#ac501">AC501</a></td>
+<td style="text-align:center">CE2a</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">DDL <a href="#bases-de-datos">Bases de datos</a> y <a href="#tipos-de-datos">tipos de datos</a></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center"><a href="#tablas">DDL Tablas</a></td>
+<td style="text-align:center"><a href="#ac503">AC503</a></td>
+<td style="text-align:center">CE2b, CE2c, CE2d</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center"><a href="#restricciones">Restricciones</a></td>
+<td style="text-align:center"><a href="#ac504">AC504</a></td>
+<td style="text-align:center">CE2e</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">Supuesto DDL</td>
+<td style="text-align:center"><a href="#ac506">AC506</a></td>
+<td style="text-align:center">CE2b, CE2c, CE2d, CE2e</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center"><a href="#cargando-datos">Cargando y exportando datos</a></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">CE4a</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">DML. <a href="#inserciones">Inserciones</a></td>
+<td style="text-align:center"><a href="#ac509">AC509</a></td>
+<td style="text-align:center">CE4a, CE4b</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">DML. <a href="#modificaciones">Actualizaciones</a> y <a href="#borrados">Borrados</a></td>
+<td style="text-align:center"><a href="#ac510">AC510</a></td>
+<td style="text-align:center">CE4b</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">Supuesto DDL-DML I</td>
+<td style="text-align:center"><a href="#ac513">AC513</a></td>
+<td style="text-align:center">CE2b, CE2c, CE2d, CE2e</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">Supuesto DDL-DML II</td>
+<td style="text-align:center"><a href="#ac514">AC514</a></td>
+<td style="text-align:center">CE4b</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:center">Reto - Diseño físico</td>
+<td style="text-align:center"><a href="#pr515">PR515</a></td>
+<td style="text-align:center">CE2a, CE2b, CE2c, CE2d, CE2e, CE4a, CE4b</td>
+</tr>
+</tbody>
+</table>
+<p>Al finalizar esta unidad, comenzaremos un nuevo reto, centrado en el modelo físico, creando y cargando datos.</p>
+<h2 id="modelo-f%C3%ADsico-a-id%22modelo-fisico%22-a"><strong>Modelo físico</strong> <a id="modelo-fisico"> </a></h2>
+<p>El modelo físico es la traducción del modelo lógico a un modelo interno, dando lugar a un esquema físico interpretable por un SGBD concreto, paso final del diseño de las bases de datos.</p>
+<p><img src="Aspose.Words.163f4297-6b47-4988-b74d-8b5ec85e16f8.008.png" alt="" title="Del diseño a los modelos"></p>
+<p>Del diseño a los modelos</p>
+<p>Para ello, transformaremos el modelo relacional al modelo físico utilizando un lenguaje específico de cada SGBD que nos permite definir los elementos, el cual se conoce como DDL (<em>Data Definition Language</em>).</p>
+<h2 id="sql-a-id%22sql%22a"><strong>SQL</strong> <a id="sql"></a></h2>
+<p>SQL (<em>sequel</em> en inglés) es la <em>lingua franca</em> para interactuar con las bases de datos relacionales. Es un lenguaje declarativo, donde lo importante es definir qué se quiere hacer, en lugar de cómo se va a hacer.</p>
+<p>Su origen se remonta a 1970 cuando <em>Edgar Frank Codd</em> publica el documento “<em>Un modelo relacional de datos para grandes bancos de datos compartidos</em>”, donde se definieron las bases del modelo relacional.</p>
+<p>Versiones</p>
+<p>El lenguaje SQL ha ido evolucionando conforme lo han hecho los diferentes SGBD y tecnologías, desde el primer estándar en el archivo 1986 hasta la última versión de 2023:</p>
+<ul>
+<li>SQL-86: funcionalidad mínima para que un lenguaje se considere SQL, introduciendo las sentencia SELECT, CREATE TABLE, INSERT, ... y JOIN.</li>
+<li>SQL-89: añade instrucciones para gestionar las claves ajenas (reglas de integridad referencial).</li>
+<li>SQL-92: standard base. Introduce los tipos de datos para trabajar con fechas, como DATE, TIME y TIMESTAMP, la agregación de consultas con GROUP BY y sus operadores COUNT y SUM, así como la validación de los campos con CHECK.</li>
+<li>SQL:1999 (SQL3): se añaden soporte para la programación orientada objetos y el uso de <em>triggers</em> y procedimientos almacenados mediante PL/SQL.</li>
+<li>SQL:2003: añade características de XML y las funciones ventana, así como el uso de SEQUENCE para generar valores únicos.</li>
+<li>SQL:2008: introduce soporte para datos temporales, la instrucción MERGE para combinar datos y mejoras en las expresiones de tabla comunes (con WITH).</li>
+<li>SQL:2016: introduce soporte nativo para JSON y funciones para manejar datos geoespaciales.</li>
+</ul>
+<p>SQL se divide a su vez en cuatro &quot;sublenguajes&quot; respecto a la funcionalidad que ofrecen:</p>
+<ul>
+<li><strong>DDL</strong> (Data Definition Language): permite crear y manipular la estructura de una base de datos.</li>
+<li><strong>DML</strong> (Data Manipulation Language): permite recuperar, almacenar, modificar, y eliminar datos de una BD</li>
+<li><strong>DCL</strong> (<em>Data Control Language</em>): permite crear roles, permisos y usuarios, controlando el acceso a los elementos de nuestras bases de datos.</li>
+<li><strong>TCL</strong> (<em>Transaction Control Language</em>): administra las modificaciones creadas con el DML.</li>
+</ul>
+<h3 id="sintaxis-a-id%22sintaxis%22a"><strong>Sintaxis</strong> <a id="sintaxis"></a></h3>
+<p>La sintaxis de SQL se define mediante instrucciones que tiene diferentes parámetros, unos opcionales, otros con diferentes valores, etc.. La nomenclatura que vamos a emplear al explicar la sintaxis de cada instrucción será la siguiente:</p>
+<p>SELECT [ALL | DISTINCT] columna1 [,columna2, columna3,.......] | *</p>
+<p>FROM tabla1 [tabla2, tabla3, ….]</p>
+<p>[WHERE condición ]</p>
+<p>[ORDER BY expr1 [DESC | ASC] [, expr2 [DESC | ASC] ....]</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Símbolo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">MAYÚSCULAS</td>
+<td>Palabras reservadas (<em>keywords</em>) de SQL</td>
+</tr>
+<tr>
+<td style="text-align:left">minúsculas</td>
+<td>variable que hay que sustituir por un elemento concreto</td>
+</tr>
+<tr>
+<td style="text-align:left">[]</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td style="text-align:left">|</td>
+<td>se elige uno de los valores</td>
+</tr>
+<tr>
+<td style="text-align:left">[]</td>
+<td>separa opciones alternativas</td>
+</tr>
+<tr>
+<td style="text-align:left">{}</td>
+<td>obliga a elegir uno de los valores</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td>número variable de datos</td>
+</tr>
+</tbody>
+</table>
+<p>Case sensitive</p>
+<p>En entornos Windows no se distingue entre mayúsculas y minúsculas, pero en entornos Linux sí.</p>
+<p>Destacar que las instrucciones finalizan con el signo de punto y coma (<img class="emoji" alt="wink" src="data:image/png;base64,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" /> y que se emplea el doble guion (--) para introducir comentarios. Además, cualquier instrucción SQL puede ser partida por espacios o saltos de línea antes de finalizar la instrucción, facilitando su lectura. Así pues, posibles sentencias que cumplen la sintaxis serían:</p>
+<p>-- Ejemplos de instrucciones SQL</p>
+<p>SELECT nombre, dni FROM cliente WHERE salario &gt; 100;</p>
+<p>SELECT * FROM cliente WHERE salario &gt; 100 ORDER BY salario;</p>
+<p>SELECT DISTINCT nombre</p>
+<p><code>  </code>FROM cliente</p>
+<p><code>  </code>ORDER BY salario DESC;</p>
+<h2 id="ddl-a-id%22ddl%22a"><strong>DDL</strong> <a id="ddl"></a></h2>
+<p>Al empezar esta unidad habíamos comentado que DDL es el lenguaje encargado de definir las estructuras de las bases de datos, esto es, permite la creación, modificación y eliminación de los objetos de la base de datos (metadatos), como, por ejemplo, las bases de datos, tablas, índices o vistas.</p>
+<p>TRUNCATE</p>
+<p>Mientras que con DROP podemos borrar una tabla, con TRUNCATE vaciaremos las tablas de contenido. Es por ello, que no se considera una operación DDL, sino más bien DML.</p>
+<p>Para ello, utilizaremos principalmente tres tipos de sentencias:</p>
+<ul>
+<li>CREATE: permite crear nuevas tablas, vistas e índices.</li>
+<li>ALTER: permite modificar las tablas agregando o eliminando campos, cambiar la definición de tipos, etc...</li>
+<li>DROP: empleado para eliminar las tablas y los índices.</li>
+</ul>
+<h3 id="puesta-en-marcha-a-id%22puesta-en-marcha%22a"><strong>Puesta en marcha</strong> <a id="puesta-en-marcha"></a></h3>
+<p>Para trabajar con un SGBD tenemos varias posibilidades. Una de ellas es mediante una solución ya desplegada en la nube, como veremos en la siguiente unidad. La segunda sería que lo instalásemos en nuestro sistema operativo mediante las instrucciones que ofrecen en sus páginas web, o bien utilizar uno de los paquetes &quot;todo incluido&quot; que ofrecen plataformas como <a href="https://bitnami.com/">Bitnami</a> (ya sea <a href="https://www.apachefriends.org/bitnami_for_xampp.html">XAMPP</a> u otro paquete). Nosotros nos hemos decantado por la tercera posibilidad, el uso de contenedores <a href="https://www.docker.com/">Docker</a> para aislar los servicios que utilicemos con lo que tengamos instalado en nuestros ordenadores. Por ello, en <a href="https://aitor-medrano.github.io/bd/00entorno.html">Entornos</a> tiene toda la información necesaria tanto para poner en marcha <a href="https://aitor-medrano.github.io/bd/00entorno.html#mariadb">MariaDB</a> como <a href="https://aitor-medrano.github.io/bd/00entorno.html#postgresql">PostgreSQL</a>.</p>
+<p>Una vez instalados los SGBD y conectados a los mismos, ya sean mediante la consola o la interfaz gráfica, debemos saber que aunque el 90% de la sintaxis de SQL es común, cada SGBD tiene sus particularidades. Es por ello, que en este curso vamos a trabajar con <em>MariaDB</em> y <em>PostgreSQL</em> de manera indistinta.</p>
+<p>Recuerda que todas las instrucciones terminan en ; y que vamos a dejar en MAYÚSCULAS las <em>keywords</em> para facilitar la lectura, aunque no es obligatorio escribirlas así.</p>
+<p>Autoevaluación</p>
+<p>En este momento deberías tener tanto <em>MariaDB</em> como <em>PostgreSQL</em> instalado en local y ser capaz de conectarte desde la línea de comandos.</p>
+<p>Una vez dentro, ejecuta los siguientes comandos y comprueba si entiendes qué realiza cada una de las siguientes sentencias:</p>
+<p>![ref4]![ref1]</p>
+<p><a href="#__tabbed_1_1">MariaDB</a><a href="#__tabbed_1_2">PostgreSQL</a></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">DATABASES</span>;
+
+<span class="hljs-keyword">USE</span> mibd;
+
+<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">TABLES</span>;
+
+<span class="hljs-keyword">DESCRIBE</span> mitabla;
+
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">version</span>();
+
+<span class="hljs-keyword">SELECT</span> datname <span class="hljs-keyword">FROM</span> pg_database;
+</div></code></pre>
+<p>Comencemos con un caso muy sencillo, donde vamos a crear una tabla con un campo, insertar un registro y finalmente consultar la información recién almacenada:</p>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> ejemplo8a (
+
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+
+    nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">64</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> ejemplo8a <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">"Aitor Medrano"</span>);
+
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> ejemplo8a;
+</div></code></pre>
+<p>Una vez conectados a nuestros SGBD y comprobado que podemos crear estructuras, insertar datos y consultarlos, vamos a profundizar en la definición de los esquemas relacionales.</p>
+<h3 id="bases-de-datos-a-id%22bases-de-datos%22a"><strong>Bases de datos</strong> <a id="bases-de-datos"></a></h3>
+<p>El principal elemento en un SGBD es la base de datos.</p>
+<p>Cuando nos conectamos indicaremos siempre a qué base de datos lo hacemos. De todos modos, siempre podemos consultar las bases de datos existentes:</p>
+<p>En el caso de <em>MariaDB</em> usaremos el commando <a href="https://mariadb.com/kb/en/show-databases/"><code>SHOW DATABASES</code></a>:</p>
+<pre class="hljs"><code><div>MariaDB [pruebas]&gt; show databases;
+</div></code></pre>
+<pre class="hljs"><code><div>
+| Database           |
+
+|--------------------|
+
+| information_schema |
+
+| pruebas            |
+
+|--------------------|
+
+
+2 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.001 sec)
+</div></code></pre>
+<p>Para crear una base de datos, usaremos la sentencia <code>CREATE DATABASE</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> [<span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span>] <span class="hljs-keyword">DATABASE</span> [<span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span>] nombreBD;
+</div></code></pre>
+<p>Por ejemplo:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> midb;
+
+<span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">exists</span> severo;
+</div></code></pre>
+<p>Más información en la <a href="https://mariadb.com/kb/en/create-database/">documentación oficial</a></p>
+<p>Si necesitamos borrarla, porque ya no la necesitamos, usaremos la sentencia <a href="https://mariadb.com/kb/en/drop-database"><code>DROP DATABASE</code></a> :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">DATABASE</span> [<span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>] nombreBD;
+</div></code></pre>
+<p>Por ejemplo:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">drop</span> <span class="hljs-keyword">database</span> prueba;
+
+<span class="hljs-keyword">drop</span> <span class="hljs-keyword">database</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">exists</span> severo;
+
+</div></code></pre>
+<h3 id="almacenamiento-a-id-%22almacenamiento%22a"><strong>Almacenamiento</strong> <a id ="almacenamiento"></a></h3>
+<p>A la hora de almacenar la información de una base de datos, tanto a nivel lógico como físico, necesitamos de diferentes elementos que conviene conocer.</p>
+<h4 id="motores-de-almacenamiento-a-id%22motores-de-almacenamiento%22a"><strong>Motores de almacenamiento</strong> <a id="motores-de-almacenamiento"></a></h4>
+<p>En los SGBD, y en concreto en <em>MariaDB</em>, los motores de almacenamiento (<em>storage engines</em>) son fundamentales para definir el formato de almacenamiento, es decir, cómo se almacenan y gestionan los datos en las bases de datos. <em>MariaDB</em> ofrece diferentes motores de almacenamiento que proporcionan distintas capacidades, los cuales influyen en cómo gestionan y organizan los datos en disco, afectando el rendimiento, la concurrencia y la eficiencia del espacio.</p>
+<ul>
+<li>
+<p><strong><em>MariaDB</em></strong></p>
+<p>Los motores más conocidos son:</p>
+<ul>
+<li><strong><em>InnoDB</em></strong>: motor de almacenamiento predeterminado en <em>MariaDB</em>, desde la versión 10.2. Proporciona soporte completo para transacciones ACID. Maneja bloqueo a nivel de fila y cuenta con soporte para claves ajenas. Finalmente, es adecuado para aplicaciones donde la integridad y las transacciones sean críticas.</li>
+<li><strong><em>MyISAM</em></strong>: Históricamente, fue el motor de almacenamiento por defecto en <em>MySQL</em> antes de <em>InnoDB</em>. Su uso ha caído al no ser transaccional y no soportar claves ajenas. Se utiliza principalmente en aplicaciones que priorizan el rendimiento de las lecturas sobre la integridad de los datos.</li>
+</ul>
+</li>
+</ul>
+<p>Existen otros motores más específicos como <em>TokuDB</em> (para grandes volúmenes de datos con alta concurrencia y compresión), <em>Aria</em> (utilizado para recuperación rápida y consultas de solo lectura), <em>ColumnStore</em> (en aplicaciones de análisis de datos) o <em>Memory</em> (para tablas temporales y cachés rápidas)</p>
+<p>Además, es posible ajustar su comportamiento, por ejemplo, permitiendo acceder a datos externos a través de FDW (<em>Foreign Data Wrappers</em>), y optimizaciones internas mediante tablas particionadas y configuraciones adicionales.</p>
+<p>Bloqueo a nivel de fila (<em>row-level locking</em>)</p>
+<p>Técnica de control de concurrencia que permite a las bases de datos bloquear únicamente las filas que están siendo accedidas o modificadas por una transacción, en lugar de bloquear toda la tabla o bloques más grandes de datos.</p>
+<p>Permite que múltiples transacciones trabajen en diferentes partes de una tabla sin interferir entre sí.</p>
+<p>MVCC - <em>Multiversion Concurrency Control</em></p>
+<p>Cuando hay una modificación de datos, en lugar de sobrescribir una fila en actualizaciones, se almacena una nueva versión de la fila mientras se mantiene la versión anterior hasta que ya no sea necesaria (las transacciones que la usan han finalizado).</p>
+<p>Las versiones anteriores de una fila se almacenan en el espacio de &quot;deshacer&quot; (<em>undo space</em>) para permitir transacciones y lecturas consistentes.</p>
+<h4 id="jerarqu%C3%ADa-l%C3%B3gica-de-una-bd-a-id%22jerarquia-logica-de-una-bd%22a"><strong>Jerarquía lógica de una BD*</strong> <a id="jerarquia-logica-de-una-bd"></a></h4>
+<p><img src="Aspose.Words.163f4297-6b47-4988-b74d-8b5ec85e16f8.012.png" alt="" title="Jerarquía lógica"></p>
+<p>Jerarquía lógica</p>
+<p>A nivel lógico, los elementos que organizan la información de una base de datos se definen mediante la siguiente jerarquía:</p>
+<ul>
+<li><em>Tablespace</em> o espacio de tablas: estructura física (normalmente una carpeta/directorio) para agrupar varias bases de datos o esquemas.</li>
+<li>Base de datos: elemento lógico de nivel superior</li>
+<li>Esquema: agrupación lógica de una o más tablas (en <em>MySQL</em>/<em>MariaDB</em> un esquema es una base de datos).</li>
+<li>Tabla: representación de una tabla relacional, que contiene datos organizados en filas y columnas. Cada tabla pertenece a un base de datos específica, y sus datos se almacenan en el <em>tablespace</em> asociado.</li>
+<li>Fila: cada uno de los registros de la tabla</li>
+</ul>
+<p>En <em>MariaDB</em> <a href="https://mariadb.com/kb/en/create-tablespace/">no está soportado crear tablespaces</a></p>
+<p>En cambio, a nivel físico, el formato de almacenamiento depende principalmente del <em>motor de almacenamiento</em> que se esté utilizando, ya que cada motor tiene su propia manera de organizar y almacenar los datos.</p>
+<ul>
+<li><strong><em>MariaDB - InnoDB</em></strong></li>
+<li>Un bloque almacena los datos de tablas e índices mediante páginas (normalmente de 16 KB)</li>
+<li>Los bloques se almacenan en un archivo de tablaspace (generalmente ibdata1 para bases de datos que comparten un <em>tablespace</em>, o en un archivo por tabla).</li>
+<li>Respecto a las filas, se almacenan utilizando un formato compacto o redondeado, dependiendo de la configuración. Cada fila contiene una clave primaria (o un índice que actúa como clave primaria) y los datos correspondientes.</li>
+</ul>
+<h4 id="juegos-de-caracteres-a-id%22juegos-de-caracteres%22a"><strong>Juegos de caracteres</strong> <a id="juegos-de-caracteres"></a></h4>
+<p>la colación, especifica cómo tratar el alfabeto del juego de caracteres, es decir, cómo se ordena</p>
+<p>Entendemos como <strong>juego de caracteres</strong> (<em>character sets</em>) a la codificación que utiliza el SGBD para representar los datos, definiendo qué caracteres pueden almacenarse en la base de datos y cómo esos caracteres son codificados internamente.</p>
+<p>Tal como ya habéis estudiado en el módulo profesional de <em>Sistemas Informáticos</em>, los juegos de caracteres más conocidos son ASCII (caracteres básicos en inglés), iso-8859-1 latin (expande ASCII para incluir los caracteres acentuados y símbolos de los lenguajes occidentales) y utf-8, el cual parte de la familia de estándares <em>Unicode</em>, que puede representar caracteres de casi todos los lenguajes del mundo, incluidos caracteres <em>multibyte</em>.</p>
+<p>Además, podemos configurar la <strong>colación</strong> (<em>collation</em>), la cual define cómo se comparan y ordenan las cadenas de texto para un juego de caracteres específico (por ejemplo, la ñ después de la n y no conforme a la tabla de códigos ASCII), teniendo en cuenta cosas como el uso de mayúsculas y minúsculas o el tratamiento de acentos (por ejemplo, si Á es igual que á).</p>
+<p>En <em>MariaDB</em> y <em>PostgreSQL</em>, los juegos de caracteres y las colaciones juegan un papel importante en cómo se almacenan y comparan las cadenas de texto. Cada sistema maneja los juegos de caracteres de manera diferente, y a continuación vamos a estudiar cómo funciona en cada uno:</p>
+<ul>
+<li>
+<p><strong><em>MariaDB</em></strong></p>
+<p>Admite múltiples juegos de caracteres y colaciones, que pueden establecerse a nivel de base de datos, tabla, columna o incluso a nivel de sesión.</p>
+<p>Así pues, ofrece una gran flexibilidad con varios juegos de caracteres (como utf8, utf8mb4, latin1, etc.) y permite especificar colaciones para determinar cómo se comparan y ordenan los textos.</p>
+</li>
+</ul>
+<p>La codificación y la colación se especifican al crear una base de datos mediante <a href="https://mariadb.com/kb/en/create-database/">CREATE DATABASE</a> con las opciones CHARACTER SET y COLLATE.</p>
+<p>Además de utf8, latin1y ascii ya comentados previamente, una codificación muy empleado es <strong>utf8mb4</strong>, la cual es una extensión de utf8 que permite almacenar todos los caracteres de <em>Unicode</em>, incluidos emojis y otros símbolos que no se pueden representar en utf8.</p>
+<p>Además, luego para cada juego de caracteres, tenemos sus colaciones. Por ejemplo, el juego de caracteres utf8 tiene varias colaciones como:</p>
+<ul>
+<li>utf8<em>general_ci: Colación insensible a mayúsculas/minúsculas (_case-insensitive</em>).</li>
+<li>utf8_bin: Colación binaria, sensible a mayúsculas/minúsculas y que compara los caracteres basándose en sus valores binarios.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> mi_base_de_datos
+
+<span class="hljs-built_in">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8mb4
+
+<span class="hljs-keyword">COLLATE</span> utf8mb4_unicode_ci;
+</div></code></pre>
+<h3 id="tipos-de-datos-a-id%22tipos-de-datos%22a"><strong>Tipos de datos</strong> <a id="tipos-de-datos"></a></h3>
+<p>Antes de entrar a ver cómo podemos crear las tablas, necesitamos conocer los tipos de datos que van a poder tener las columnas que definamos. <em>A grosso modo</em>, los tipos más empleados en <a href="https://mariadb.com/kb/en/data-types/">MariaDB</a> son:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Tipo de dato</th>
+<th style="text-align:center"><em>MariaDB</em></th>
+<th style="text-align:right">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Numéricos</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">TINYINT</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Entero pequeño, de 1 byte</td>
+</tr>
+<tr>
+<td style="text-align:left">SMALLINT</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Entero pequeño, de 2 bytes</td>
+</tr>
+<tr>
+<td style="text-align:left">MEDIUMINT</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Entero de 3 bytes (<em>MariaDB</em>)</td>
+</tr>
+<tr>
+<td style="text-align:left">INT, INTEGER</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Entero estándar de 4 bytes</td>
+</tr>
+<tr>
+<td style="text-align:left">BIGINT</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Entero grande de 8 bytes</td>
+</tr>
+<tr>
+<td style="text-align:left">DECIMAL, NUMERIC</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Número con precisión fija (exacta)</td>
+</tr>
+<tr>
+<td style="text-align:left">FLOAT</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Número de coma flotante de precisión simple</td>
+</tr>
+<tr>
+<td style="text-align:left">DOUBLE</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Número de coma flotante de precisión doble</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Cadenas</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">CHAR(n)</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Cadena de longitud fija</td>
+</tr>
+<tr>
+<td style="text-align:left">VARCHAR(n)</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Cadena de longitud variable</td>
+</tr>
+<tr>
+<td style="text-align:left">TEXT</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Cadena de longitud ilimitada</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fechas y Horas</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">DATE</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Fecha (año, mes, día)</td>
+</tr>
+<tr>
+<td style="text-align:left">TIME</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Hora (sin zona horaria)</td>
+</tr>
+<tr>
+<td style="text-align:left">DATETIME</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Fecha y hora</td>
+</tr>
+<tr>
+<td style="text-align:left">TIMESTAMP</td>
+<td style="text-align:center">Sí</td>
+<td style="text-align:right">Marca de tiempo (con o sin zona horaria)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Booleanos</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">BOOLEAN</td>
+<td style="text-align:center">Sí (alias de TINYINT)</td>
+<td style="text-align:right">Tipo booleano</td>
+</tr>
+<tr>
+<td style="text-align:left">------------------------------------------------------------------------------------------------------</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<p>Algunos ejemplos de tipos serían:</p>
+<pre class="hljs"><code><div>
+BIGINT
+
+CHAR(8)
+
+VARCHAR(255)
+
+DECIMAL(4,2) -- 5 dígitos en total, con 2 decimales, por ejemplo 123,45
+
+</div></code></pre>
+<h4 id="enumeraciones-a-id%22enumeraciones%22a"><strong>Enumeraciones</strong> <a id="enumeraciones"></a></h4>
+<p>Además de los tipos vistos, podemos crear enumeraciones como un conjunto de valores restringidos que puede tomar un determinado campo, haciendo uso de la keyword ENUM en <a href="https://mariadb.com/kb/en/enum/">MariaDB</a></p>
+<pre class="hljs"><code><div>curso ENUM ('0', '1', '2'),
+
+horario ENUM ('mañana', 'tarde', 'noche')
+
+</div></code></pre>
+<p>Primero debemos definir un tipo y luego asociar ese tipo al campo:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TYPE</span> animo <span class="hljs-keyword">AS</span> ENUM (<span class="hljs-string">'feliz'</span>, <span class="hljs-string">'triste'</span>, <span class="hljs-string">'normal'</span>);
+
+estado animo;
+</div></code></pre>
+<h3 id="tablas-a-id%22tablas%22a"><strong>Tablas</strong> <a id="tablas"></a></h3>
+<p>Dentro de la definición de datos, la creación de tablas es la parte más importante ya que nos permite trasladar nuestro modelo relacional al modelo físico.</p>
+<p>Para crear una tabla emplearemos la sentencia <code>CREATE TABLE</code>. La sintaxis básica compartida por todos los SGBD es la siguiente:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> [<span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span>] [basededatos.]nombreDeTabla (
+
+  columna1 tipoDato1 [propiedadesColumna],
+
+  ...
+
+  columnaN tipoDatoN [propiedadesColumna],
+
+  [restriccionesTabla]
+
+);
+</div></code></pre>
+<p>Conviene revisar la sintaxis de <a href="https://mariadb.com/kb/en/create-table/">MariaDB</a> para comprobar los detalles de cada SGBD.</p>
+<p>Por ejemplo, para crear una tabla con un único atributo podríamos hacer:</p>
+<pre class="hljs"><code><div>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> USUARIO (
+
+   nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">25</span>)
+
+);
+</div></code></pre>
+<p>Algunas restricciones que hemos de tener en cuenta son:</p>
+<ul>
+<li>No puede haber nombres de tablas repetidas.</li>
+<li>El nombre de la tabla debe comenzar por un carácter alfabético y su longitud máxima es de 30 caracteres. Sólo se permiten letras del alfabeto inglés, dígitos o el signo de guión bajo.</li>
+<li>No podemos crear tablas cuyo nombre coincida con las palabras reservadas de SQL (por ejemplo, no podemos llamar a una tabla WHERE).</li>
+<li>Como convención, vamos a nombrar las TABLAS en MAYÚSCULAS y las columnas en minúsculas.</li>
+<li>En principio, respecto a los nombre de las tablas y las columnas, los SGBD no son <em>case sensitive</em> (no distinguen entre mayúsculas y minúsculas), aunque puede depender de la configuración del sistema operativo (sobre todo en sistemas Linux/Unix) o el uso de comillas dobles (no recomendado). En cambio, en los datos, depende de la configuración de la colación.</li>
+</ul>
+<p>A continuación tenemos algunos ejemplos de creaciones de tablas con diferentes tipos de datos:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> PROVEEDOR(nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">32</span>));
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CLIENTE (
+
+  nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">32</span>),
+
+  localidad <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">'Elche'</span>);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> PRESTAMO (
+
+  idPrestamo <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">8</span>),
+
+  fechaPrestamo <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-keyword">CURRENT_DATE</span>));
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CIUDAD (
+
+  nombre <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+
+  poblacion <span class="hljs-built_in">INT</span> <span class="hljs-literal">NULL</span>,
+
+  codigoPostal <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">6</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">03203</span>);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> PROVINCIA (
+
+  nombre <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+
+  poblacion <span class="hljs-built_in">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">5000</span>);
+</div></code></pre>
+<p>Con estos ejemplos, hemos visto que algunas de las propiedades de columna que podemos indicar son los valores no nulos (mediante NOT NULL) o valores por defecto (mediante DEFAULT). En el apartado <a href="#restricciones">Restricciones</a> las estudiaremos en profundidad.</p>
+<p>En todo momento, podemos obtener la estructura de una tabla mediante el comando <code>DESCRIBE nombreTabla</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">DESCRIBE</span> CIUDAD;
+</div></code></pre>
+<h4 id="clave-primaria-a-id%22clave-primaria%22a"><strong>Clave primaria</strong> <a id="clave-primaria"></a></h4>
+<p>Una vez visto como crear la tablas y sus atributos, nos centramos en la creación de la clave primaria. Toda tabla debe tener una clave primaria (ya sea simple o compuesta). Para ello, si tenemos un atributo simple, podemos añadir la propiedad PRIMARY KEY al atributo, aunque por convenciones de código, es mejor definir la clave primaria después de todos los atributos, a modo de restricciones.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CIUDAD (
+
+  nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">20</span>) PRIMARY <span class="hljs-keyword">KEY</span>, <span class="hljs-comment">-- clave primaria como propiedad</span>
+
+  poblacion <span class="hljs-built_in">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">5000</span>);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> PROVINCIA (
+
+  nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">20</span>),
+
+  poblacion <span class="hljs-built_in">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">5000</span>,
+
+  PRIMARY <span class="hljs-keyword">KEY</span>(nombre)); <span class="hljs-comment">-- clave primaria como restricción</span>
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> EMPLEADO (
+
+  codigo <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">9</span>),
+
+  departamento <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">15</span>),
+
+  nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">40</span>),
+
+  PRIMARY <span class="hljs-keyword">KEY</span>(codigo, departamento)); <span class="hljs-comment">-- clave primaria compuesta</span>
+</div></code></pre>
+<p>Un buena práctica es definir un atributo a modo de codigo (o id) asociado a un número entero autoincrementable. Para ello, tras la definición del atributo como entero (sin signo), añadiremos la propiedad AUTO_INCREMENT en la definición del atributo.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> PERSONA (
+
+  <span class="hljs-keyword">id</span> <span class="hljs-built_in">INT</span> <span class="hljs-keyword">UNSIGNED</span> AUTO_INCREMENT PRIMARY <span class="hljs-keyword">KEY</span>,
+
+  nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">40</span>),
+
+  fecha <span class="hljs-built_in">DATE</span>);
+
+</div></code></pre>
+<p>En <em>Oracle</em> se utilizan las secuencias en vez de los tipos autoincrementables. Tras cada inserción, la secuencia toma un nuevo valor.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SEQUENCE</span> pid_seq <span class="hljs-keyword">AS</span> <span class="hljs-built_in">integer</span>;
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> PERSONAPS (
+
+   <span class="hljs-keyword">id</span> <span class="hljs-built_in">integer</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">nextval</span>(<span class="hljs-string">'pid_seq'</span>)
+
+);
+</div></code></pre>
+<h3 id="creando-tablas-con-consultas"><strong>Creando tablas con consultas</strong></h3>
+<p>Un caso particular de la creación de tablas es hacerlo a partir del resultado de una consulta, de manera que contiene la estructura (tipos de datos) y los datos obtenido. Para ello, en vez de indicar los campos y restricciones, realizamos la consulta mediante SELECT:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> nombreTabla <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span>…
+</div></code></pre>
+<p>Por ejemplo, para crear una tabla GERENTE con los datos de empleados catalogados como Gerentes, haríamos:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> GERENTE <span class="hljs-keyword">AS</span>
+
+  <span class="hljs-keyword">SELECT</span> e.nombre, e.apellido1, e.apellido2, e.email
+
+  <span class="hljs-keyword">FROM</span> EMPLEADO e
+
+  <span class="hljs-keyword">WHERE</span> e.puesto <span class="hljs-keyword">LIKE</span> <span class="hljs-string">"%Gerente%"</span>;
+
+</div></code></pre>
+<p>Volveremos a esta posibilidad cuando aprendamos a realizar consultas mediante SQL:</p>
+<h4 id="modificando-tablas-a-id%22modificando-tablas%22a"><strong>Modificando tablas</strong> <a id="modificando-tablas"></a></h4>
+<p>Una vez creada una tabla, podemos modifica su estructura mediante las sentencias <code>**ALTER TABLE**</code>,  en <a href="https://mariadb.com/kb/en/alter-table/">MariaDB</a></p>
+<p>Para añadir columnas, usaremos la opción <strong>ADD</strong>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> nombreTabla <span class="hljs-keyword">ADD</span> (
+
+  nombreColumna tipoDatos [propiedades]
+
+  ,columnaSiguiente tipoDatos [propiedades]…)
+</div></code></pre>
+<p>De este modo, si queremos añadir un campo para almacenar el teléfono de los empleados (sus campos estarán inicializados a NULL cada cada registro de la tabla EMPLEADO), haríamos:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> EMPLEADO <span class="hljs-keyword">ADD</span> (telefono <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">12</span>));
+</div></code></pre>
+<p>En cambio, si queremos eliminar una columna, usaremos la opción DROP:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> nombreTabla <span class="hljs-keyword">DROP</span> (columna [,columnaSiguiente,...]);
+</div></code></pre>
+<p>Así pues, si queremos eliminar el teléfono recién creado:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> EMPLEADO <span class="hljs-keyword">DROP</span> (telefono);
+</div></code></pre>
+<p>Finalmente, si queremos modificar el tipo de una columna, usaremos la opción <strong>MODIFY</strong>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> nombreTabla <span class="hljs-keyword">MODIFY</span>(
+
+  columna tipo [propiedades]
+
+  [,columnaSiguiente tipo [propiedades]]
+</div></code></pre>
+<p>Un caso particular de las operaciones de modificación es renombrar una tabla. Para ello, usaremos la opción RENAME TO:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> nombreTablaViejo <span class="hljs-keyword">RENAME</span> <span class="hljs-keyword">TO</span> nombreNuevo;
+</div></code></pre>
+<p>Autoevaluación</p>
+<p>Si tenemos las siguientes tablas:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CLIENTE (
+
+dni <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">9</span>) PRIMARY <span class="hljs-keyword">KEY</span>,
+
+cnombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+
+direccion <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">60</span>));
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> MASCOTA (
+
+codigo <span class="hljs-built_in">INTEGER</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+
+nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+
+raza <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>));
+</div></code></pre>
+<p>¿Sabes qué realizan las siguientes operaciones?</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> MASCOTA <span class="hljs-keyword">ADD</span> especie <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">AFTER</span> raza;
+
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> MASCOTA <span class="hljs-keyword">ADD</span> cliente <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">9</span>) <span class="hljs-keyword">AFTER</span> nombre;
+
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> MASCOTA <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">CONSTRAINT</span> fk_duenyo <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (cliente) <span class="hljs-keyword">REFERENCES</span> CLIENTE(dni);
+
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> MASCOTA <span class="hljs-keyword">MODIFY</span> codigo <span class="hljs-built_in">INT</span>(<span class="hljs-number">3</span>) AUTO_INCREMENT;
+</div></code></pre>
+<p>¿Sabes averiguar que realiza esta sentencia?</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> clientes <span class="hljs-keyword">RENAME</span> nombre <span class="hljs-keyword">TO</span> nomMascosta <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>);
+</div></code></pre>
+<h4 id="eliminando-tablas-a-id%22eliminando-tablas%22a"><strong>Eliminando tablas</strong> <a id="eliminando-tablas"></a></h4>
+<p>Para eliminar tablas se emplea la instrucción <code>sql DROP TABLE nombreTabla</code>, tanto en <a href="https://mariadb.com/kb/en/drop-table/">MariaDB</a> como en <a href="https://www.postgresql.org/docs/current/sql-droptable.html">PostgreSQL</a>. Hemos de tener en cuenta que cuando tenemos un base de datos con tablas relacionadas mediante claves ajenas, la integridad referencial restringe el borrado de una clave primaria referenciada por una clave ajena. Es por ello que el orden importa, y tenemos que ir eliminando primero las tablas que contienen las claves ajenas y no son referenciadas por otras tablas.</p>
+<p>DROP TABLE CLIENTE;</p>
+<h3 id="restricciones-a-id%22restricciones%22a"><strong>Restricciones</strong> <a id="restricciones"></a></h3>
+<p>Una vez hemos visto los casos más sencillos, hemos de saber que las tablas van a contener restricciones que aportan mayor integridad a los datos, en forma de claves ajenas, validaciones de campos, campos no nulos, únicos, etc... representando las restricciones estudiadas en el modelo relacional.</p>
+<p>Así pues, si volvemos a la creación de tablas, y nos centramos en <em>MariaDB</em> podemos indicar las restricciones mediante diferentes parámetros:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> [<span class="hljs-keyword">TEMPORARY</span>] <span class="hljs-keyword">TABLE</span> [db.]tabla (
+
+campo1 tipo [(tamaño)]
+  [<span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> | <span class="hljs-literal">NULL</span>]
+  [<span class="hljs-keyword">DEFAULT</span> valor] <span class="hljs-comment">-- valor por defecto</span>
+  [<span class="hljs-keyword">UNIQUE</span> [<span class="hljs-keyword">KEY</span>] | PRIMARY <span class="hljs-keyword">KEY</span>] <span class="hljs-comment">-- clave única o primaria</span>
+  [<span class="hljs-keyword">REFERENCES</span> tablaexterna [(campoexterno1, campoexterno2)] <span class="hljs-comment">-- atributo clave ajena</span>
+  [<span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> {<span class="hljs-keyword">CASCADE</span> | <span class="hljs-keyword">SET</span> <span class="hljs-literal">NULL</span> | <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACTION</span>}] <span class="hljs-comment">-- propagación de borrados</span>
+  [<span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> {<span class="hljs-keyword">CASCADE</span> | <span class="hljs-keyword">SET</span> <span class="hljs-literal">NULL</span> | <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACTION</span>}], <span class="hljs-comment">-- propagación de actualizaciones</span>
+  ....,
+  [<span class="hljs-keyword">CONSTRAINT</span> de múltiples campos]) <span class="hljs-keyword">ENGINE</span> = <span class="hljs-keyword">Innodb</span>; <span class="hljs-comment">-- motor de ejecución</span>
+</div></code></pre>
+<p>Las restricciones las podemos definir a nivel de opciones dentro de cada campo, o tras la definición de todos los campos, mediante la <em>keyword</em> CONSTRAINT tanto en <a href="https://mariadb.com/kb/en/constraint/">MariaDB</a>
+.</p>
+<h4 id="claves-%C3%BAnicas-a-id%22claves-unicas%22a"><strong>Claves únicas</strong> <a id="claves-unicas"></a></h4>
+<p>Cuando marcábamos en el modelo relación una propiedad como UK, es decir, clave única o alternativa, estamos indicando que dicho atributo no permite repetidos, y provocará la creación de un índice (los índices los estudiaremos en la unidad 9). Para ello, ahora usaremos la propiead <strong>UNIQUE</strong>.</p>
+<p>Recuerda que las claves alternativas, normalmente, son una de las claves candidatas que no hemos elegido como clave primaria:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> EMPLEADO(
+  dni <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">9</span>) PRIMARY <span class="hljs-keyword">KEY</span>,
+  nSegSocial <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">15</span>) <span class="hljs-keyword">UNIQUE</span>,
+  nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">40</span>));
+</div></code></pre>
+<p>La principal diferencia entre una clave primaria y una clave única es que la clave única permite valores nulos.</p>
+<h4 id="claves-ajenas-a-id%22claves-ajenas%22a"><strong>Claves ajenas</strong> <a id="claves-ajenas"></a></h4>
+<p>Para indicar las claves ajena, aunque podemos hacerlo a nivel de campo, es mucho mejor acostumbrarse a definirlas siempre como restricciones. Para ello, usaremos la siguiente estructura, donde col es el campo que apunta a la clave primaria clave de la tabla tabla.</p>
+<pre class="hljs"><code><div>CONSTRAINT nombre FOREIGN KEY col REFERENCES tabla (clave)
+</div></code></pre>
+<p>A toda esta definición le pondremos un nombre por si más adelante necesitamos acceder a ella para modificarla, eliminarla, etc... Para definir este nombre, una convención es anteponer el tipo de restricción (PK, FK, CK, ...), y utilizando la barra de subrayado como separador, los nombres o siglas de los elementos involucrados.</p>
+<p>Así pues, un ejemplo de tabla con clave primaria y claves ajenas definidas mediante CONSTRAINT sería:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> ALQUILER (
+
+ dni <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">9</span>),
+
+ codPelicula <span class="hljs-built_in">INT</span> <span class="hljs-keyword">UNSIGNED</span>,
+
+ <span class="hljs-keyword">CONSTRAINT</span> PK_ALQUILER PRIMARY <span class="hljs-keyword">KEY</span> (dni, codPelicula),
+
+ <span class="hljs-keyword">CONSTRAINT</span> FK_ALQ_CLI <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (dni) <span class="hljs-keyword">REFERENCES</span> CLIENTE(dni),
+
+ <span class="hljs-keyword">CONSTRAINT</span> FK_ALQ_PEL <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (codPelicula) <span class="hljs-keyword">REFERENCES</span> PELICULA(cod)
+
+);
+</div></code></pre>
+<p>Cuando tenemos una clave ajena compuesta, sólo hemos de indicar los atributos separándolos con comas:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> EXISTENCIA (
+  tipo <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">9</span>),
+  modelo <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">3</span>),
+  numAlmacen <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">1</span>)
+  cantidad <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">7</span>),
+  <span class="hljs-keyword">CONSTRAINT</span> PK_EXISTENCIAS PRIMARY <span class="hljs-keyword">KEY</span>(tipo, modelo, numAlmacen)
+  <span class="hljs-keyword">CONSTRAINT</span> FK_EXI_PIE <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (tipo, modelo) <span class="hljs-keyword">REFERENCES</span> PIEZA,
+  <span class="hljs-keyword">CONSTRAINT</span> FK_EXI_ALM <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (numAlmacen) <span class="hljs-keyword">REFERENCES</span> ALMACEN,
+);
+
+</div></code></pre>
+<h4 id="propagaci%C3%B3n-a-id%22propagacion%22a"><strong>Propagación</strong> <a id="propagacion"></a></h4>
+<p>Cuando se elimina (ON DELETE) o actualiza (ON UPDATE) un campo que está referenciado mediante una clave ajena, debemos indicar qué comportamiento de propagación debe realizar el SGBD con los datos en las tablas origen.</p>
+<p>Vamos a retomar el ejemplo que vimos en la unidad 3, sobre un estudiante y las asignaturas que cursa, el cual se podría traducir en el siguiente DDL:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> ESTUDIANTE (
+
+  nif <span class="hljs-built_in">varchar</span>(<span class="hljs-number">9</span>),
+
+  codigo <span class="hljs-built_in">int</span>,
+
+  nombre <span class="hljs-built_in">varchar</span>(<span class="hljs-number">32</span>),
+
+  fMatricula <span class="hljs-built_in">date</span>,
+
+  direccion <span class="hljs-built_in">varchar</span>(<span class="hljs-number">64</span>),
+
+  <span class="hljs-keyword">CONSTRAINT</span> PK_ESTUDIANTE PRIMARY <span class="hljs-keyword">KEY</span>(nif)
+
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CURSAR (
+
+  nifEstudiante <span class="hljs-built_in">varchar</span>(<span class="hljs-number">9</span>),
+
+  asignatura <span class="hljs-built_in">int</span>,
+
+  anyo <span class="hljs-built_in">int</span>,
+
+  repetidor <span class="hljs-built_in">boolean</span>,
+
+  <span class="hljs-keyword">CONSTRAINT</span> PK_CURSAR PRIMARY <span class="hljs-keyword">KEY</span>(nifEstudiante, asignatura, anyo),
+
+  <span class="hljs-keyword">CONSTRAINT</span> FK_CUR_EST <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (nifEstudiante) <span class="hljs-keyword">REFERENCES</span> ESTUDIANTE(nif)
+
+);
+</div></code></pre>
+<p>Y un ejemplo de las tablas con datos sería:</p>
+<ul>
+<li>
+<p>ESTUDIANTE</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>nif</strong></th>
+<th style="text-align:left"><strong>codigo</strong></th>
+<th style="text-align:left"><strong>nombre</strong></th>
+<th style="text-align:left"><strong>fMatricula</strong></th>
+<th style="text-align:left"><strong>direccion</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">12345678A</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">Pedro Casas</td>
+<td style="text-align:left">1/9/24</td>
+<td style="text-align:left">Avenida de la libertad, 23</td>
+</tr>
+<tr>
+<td style="text-align:left">48123456B</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">Mireia Vidal</td>
+<td style="text-align:left">1/9/24</td>
+<td style="text-align:left">Porta de la Morera, 6</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>CURSAR</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>nifEstudiante*</strong></th>
+<th style="text-align:left"><strong>asignatura</strong></th>
+<th style="text-align:left"><strong>anyo</strong></th>
+<th style="text-align:left"><strong>repetidor</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">12345678A</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">2024</td>
+<td style="text-align:left">true</td>
+</tr>
+<tr>
+<td style="text-align:left">48123456B</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">2024</td>
+<td style="text-align:left">false</td>
+</tr>
+<tr>
+<td style="text-align:left">12345678A</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">2023</td>
+<td style="text-align:left">false</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>¿Cómo repercute el sistema si eliminamos el estudiante 12345678A de la tabla ESTUDIANTE? ¿O le cambiamos el nif (algo inusual, pero que puede pasar si nos hemos equivocado al teclearlo)? ¿Qué opciones tenemos para respetar la integridad referencial?</p>
+<p>Las posibilidades son:</p>
+<ul>
+<li><code>NO ACTION</code>: se impide la operación, rechazando el borrado o la actualización. Este es el comportamiento por defecto si no indicamos nada.</li>
+<li><code>CASCADE</code>: la operación se propaga de la tabla origen a la destino. Esto es, si borramos el estudiante, borrará los registros de CURSAR. Si modificamos su nif, también modificará los nifEstudiante de CURSAR.</li>
+<li><code>SET NULL</code>: la clave ajena se pone a NULL, de manera que se pierde la relación existente, provocando probablemente inconsistencia de datos.</li>
+</ul>
+<p>Si volvemos a definir la tabla CURSAR indicando las restricciones de propagación, podríamos hacer:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CURSAR (
+
+  nifEstudiante <span class="hljs-built_in">varchar</span>(<span class="hljs-number">9</span>),
+
+  asignatura <span class="hljs-built_in">int</span>,
+
+  anyo <span class="hljs-built_in">int</span>,
+
+  repetidor <span class="hljs-built_in">boolean</span>,
+
+  <span class="hljs-keyword">CONSTRAINT</span> PK_CURSAR PRIMARY <span class="hljs-keyword">KEY</span>(nifEstudiante, asignatura, anyo),
+
+  <span class="hljs-keyword">CONSTRAINT</span> FK_CUR_EST <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (nifEstudiante) <span class="hljs-keyword">REFERENCES</span> ESTUDIANTE(nif)
+
+    <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">CASCADE</span>
+
+    <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACTION</span>
+
+);
+</div></code></pre>
+<p><strong>Autoevaluación</strong></p>
+<p>¿Por qué en este caso concreto no podemos indicar la acción SET NULL?</p>
+<h4 id="validaciones-a-id%22validaciones%22a"><strong>Validaciones</strong> <a id="validaciones"></a></h4>
+<p>Para poder incluir restricciones de validación y que los datos introducidos cumplan ciertas condiciones, emplearemos el atributo CHECK, tanto tras la definición de un atributo como una restricción con CONSTRAINT:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> INGRESO1 (
+  cod <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">5</span>) PRIMARY <span class="hljs-keyword">KEY</span>,
+  concepto <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">40</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+  importe <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">11</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">CHECK</span> (importe&gt;<span class="hljs-number">0</span> <span class="hljs-keyword">AND</span> importe&lt;<span class="hljs-number">8000</span>));
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> INGRESO2 (
+  cod <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">5</span>) PRIMARY <span class="hljs-keyword">KEY</span>,
+  concepto <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">40</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+  importe <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">11</span>,<span class="hljs-number">2</span>),
+  <span class="hljs-keyword">CONSTRAINT</span> CK_INGRESO <span class="hljs-keyword">CHECK</span> (importe&gt;<span class="hljs-number">0</span> <span class="hljs-keyword">AND</span> importe&lt;<span class="hljs-number">8000</span>));
+</div></code></pre>
+<p>También podemos crear validaciones que comparen el valor de dos atributos de la tabla:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> INGRESO3(
+  cod <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">5</span>),
+  concepto <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">40</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+  importeMax <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">11</span>,<span class="hljs-number">2</span>),
+  importe <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">11</span>,<span class="hljs-number">2</span>),
+  <span class="hljs-keyword">CONSTRAINT</span> PK_INGRESO (cod),
+  <span class="hljs-keyword">CONSTRAINT</span> CK_INGRESO <span class="hljs-keyword">CHECK</span> (importe&lt;importeMax));
+</div></code></pre>
+<h4 id="gestionando-a-id%22gestionando%22a"><strong>Gestionando</strong> <a id="gestionando"></a></h4>
+<p>Además de indicar las restricciones mientras creamos una tabla, podemos hacerlo mediante sentencia ALTER TABLE.</p>
+<p>Así pues, para añadir una nueva restricción usaremos la opción ADD:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> tabla <span class="hljs-keyword">ADD</span> [<span class="hljs-keyword">CONSTRAINT</span> nombre] tipoDeRestricción (columnas);
+</div></code></pre>
+<p>Para eliminar, la opción DROP:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> tabla <span class="hljs-keyword">DROP</span> {PRIMARY <span class="hljs-keyword">KEY</span> | <span class="hljs-keyword">CONSTRAINT</span> nombreRestricción} [<span class="hljs-keyword">CASCADE</span>]
+</div></code></pre>
+<p>Respecto a las claves, si queremos deshabilitarlas para hacer algún tipo de modificación, haremos uso de las opciones ENABLE o DISABLE según convenga:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> tabla <span class="hljs-keyword">ENABLE</span> <span class="hljs-keyword">KEYS</span>;
+
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> tabla <span class="hljs-keyword">DISABLE</span> <span class="hljs-keyword">KEYS</span>;
+</div></code></pre>
+<p>Otros elementos</p>
+<p>Existen otras estructuras que forman parte de DDL pero que veremos más adelante son:</p>
+<ul>
+<li><strong>Vistas</strong>: Permiten crear una representación externa (tabla virtual) a partir de una consulta, mediante CREATE VIEW. Las estudiaremos en la unidad 8.</li>
+<li><strong>Índices</strong>: Se utilizan para acelerar las consultas, mediante CREATE INDEX. Los estudiaremos en la unidad 9.</li>
+<li><strong>Disparadores</strong> (<em>triggers</em>): Se asocian a operaciones que se producen en el sistema (evento) para realizar otra acción. Los estudiaremos en la unidad 11.</li>
+</ul>
+<h2 id="cargando-datos-a-id%22cargando-datos%22a"><strong>Cargando datos</strong> <a id="cargando-datos"></a></h2>
+<p>A la hora de cargar datos en una base de datos, además de las operaciones de inserción individual o múltiple de registros, todos los SGBD incorporan herramientas para la importación tanto de datos como recuperación de copias de seguridad que nos sirven para tener un entorno listo para trabajar.</p>
+<h3 id="ejecutando-un-script-a-id%22ejecutando-un-script-%22a"><strong>Ejecutando un script</strong> <a id="ejecutando-un-script "></a></h3>
+<p>Si ya tenemos un <em>script</em>, por ejemplo, con las sentencias CREATE TABLE definidas o diferentes instrucciones que insertan o modifican datos, mediante la línea de comandos podemos ejecutarlas a través de la entrada estándar (<strong>&lt;</strong>) o haciendo uso de parámetros:</p>
+<pre class="hljs"><code><div>mariadb -u usuario -p nombre_de_base_de_datos &lt; archivo.sql
+
+psql -U usuario -d nombre_de_base_de_datos &lt; archivo.sql
+
+psql -U usuario -d nombre_de_base_de_datos -f archivo.sql
+</div></code></pre>
+<p>Si en cambio lo queremos hacer dentro de cada cliente (una vez nos hemos autenticado con el usuario y contraseña):</p>
+<p>En <em>MariaDB</em> usaremos el comando <a href="https://mariadb.com/kb/en/mariadb-command-line-client/">source</a>:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">source</span> archivo.sql
+</div></code></pre>
+<h3 id="cargando-datos-desde-archivos-a-id%22cargando-datos-desde-archivos%22"><strong>Cargando datos desde archivos</strong> <a id="cargando-datos-desde-archivos"></h3>
+<p>Si en vez de un <em>script</em> tenemos los datos a cargar y ya tenemos nuestra estructura de datos creada (y probablemente con datos ya existentes), tenemos otras posibilidades:</p>
+<p>En <em>MariaDB</em> usaremos la herramienta <a href="https://mariadb.com/kb/en/mariadb-import/">mariadb-import</a> que permite cargar datos en formato texto, csv, etc...:</p>
+<pre class="hljs"><code><div>mariadb-import --<span class="hljs-built_in">local</span> -u usuario -p nombre_de_base_de_datos /ruta/al/archivo.csv
+</div></code></pre>
+<p>Otra forma es hacer uso de datos almacenados en ficheros de texto y cargarlos directamente en una tabla es utilizar el comando <a href="https://mariadb.com/kb/en/load-data-infile">LOAD DATA INFILE</a>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">LOAD</span> <span class="hljs-keyword">DATA</span> <span class="hljs-keyword">INFILE</span> <span class="hljs-string">'/ruta/al/archivo.csv'</span>
+
+<span class="hljs-keyword">INTO</span> <span class="hljs-keyword">TABLE</span> empleados
+
+<span class="hljs-keyword">FIELDS</span> <span class="hljs-keyword">TERMINATED</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">','</span> <span class="hljs-comment">-- Separador de campos (coma)</span>
+
+<span class="hljs-keyword">LINES</span> <span class="hljs-keyword">TERMINATED</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">'\n'</span> <span class="hljs-comment">-- Fin de línea</span>
+
+<span class="hljs-keyword">IGNORE</span> <span class="hljs-number">1</span> <span class="hljs-keyword">LINES</span> <span class="hljs-comment">-- Ignora la primera línea (encabezados)</span>
+
+(nombre, puesto, salario); <span class="hljs-comment">-- Especifica las columnas</span>
+
+</div></code></pre>
+<p>Esta opción es mucho más eficiente que ejecutar múltiples sentencias INSERT.</p>
+<p>En cambio, para exportar los datos, podemos crear un volcado de la base de datos mediante <a href="https://mariadb.com/kb/en/mariadb-dump/">mariadb-dump</a>:</p>
+<pre class="hljs"><code><div>mariadb-dump -u usuario -p nombre_de_base_de_datos &gt; dump.sql
+
+mariadb-dump -u usuario -p --all-databases &gt; dump.sql
+</div></code></pre>
+<p>Usaremos la herramienta <a href="https://mariadb.com/kb/en/mariabackup-overview/">mariabackup</a>, la cual es una herramienta de <em>MariaDB</em> para crear copias de seguridad físicas (binarias) de las bases de datos.</p>
+<p>Para restaurar una copia de seguridad haremos:</p>
+<pre class="hljs"><code><div>mariabackup --copy-back --target-dir=/ruta/a/la/copia_de_seguridad
+</div></code></pre>
+<p>Y para realizar la copia de seguridad:</p>
+<pre class="hljs"><code><div>mariabackup --prepare --target-dir=/ruta/a/la/copia_de_seguridad
+</div></code></pre>
+<h2 id="dml-a-id%22dml%22a"><strong>DML</strong> <a id="dml"></a></h2>
+<p>Una vez que ya sabemos como crear las estructuras de datos para guardar la información, vamos a aprender a gestionarla.</p>
+<p>CRUD</p>
+<p>Las operaciones DML se asocian al acrónimo CRUD:</p>
+<ul>
+<li><strong>C</strong>reate: insertar</li>
+<li><strong>R</strong>ead: consultar</li>
+<li><strong>U</strong>pdate: modificar</li>
+<li><strong>D</strong>elete: eliminar</li>
+</ul>
+<p>Sobre una tabla, las operaciones que vamos a poder realizar son:</p>
+<ul>
+<li>insertar datos en una tabla</li>
+<li>modificar datos de una tabla</li>
+<li>eliminar datos de una tabla</li>
+<li>consultar datos de una o más tablas.</li>
+</ul>
+<p>Cuando hablamos de &quot;datos de una tabla&quot;, podemos referirnos a registros completos, campos concretos o incluso elementos relacionados de varias tablas.</p>
+<p>Para realizar estas operaciones, se utiliza el subconjunto DML (<em>Data Manipulation Language</em>) de SQL. En esta unidad nos vamos a centrar en la inserción, modificación y eliminación de datos, dejando las consultas para trabajarlas en profundidad en las siguientes unidades.</p>
+<p>Para los siguientes ejemplos vamos a trabajar con la siguiente tabla:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> dml8a (
+
+  <span class="hljs-keyword">id</span> <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+
+  nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">64</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">"Chuck Norris"</span>,
+
+  email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">64</span>));
+</div></code></pre>
+<h3 id="inserciones-a-id%22inserciones%22a"><strong>Inserciones</strong> <a id="inserciones"></a></h3>
+<p>La sentencia para insertar datos es INSERT INTO en <a href="https://mariadb.com/kb/en/insert">MariaDB</a> :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tabla <span class="hljs-keyword">VALUES</span> (valor1, valor2, ...);
+</div></code></pre>
+<p>Veamos unos ejemplos. Podemos insertar en la tabla dml8a utilizando:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> dml8a <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">"Aitor Medrano"</span>, <span class="hljs-string">"a.medrano@edu.gva.es"</span>);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> dml8a(<span class="hljs-keyword">id</span>, nombre) <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">2</span>, <span class="hljs-string">"Pedro Casas"</span>);
+</div></code></pre>
+<p>Si no ponemos los nombres de los campos detrás del nombre de la tabla, en los valores deberemos introducir todos los valores siguiendo el orden de los campos según fueron creados (siempre puedes consultar la estructura de una tabla mediante DESCRIBE nombre_tabla). Además, los tipos de los datos deben concordar, incluso en el tamaño o precisión, debiendo haber una correspondencia posicional uno a uno entre las columnas y los valores introducidos.</p>
+<p>Si queremos insertar varios registros con una única instrucción, los indicaremos separados por comas:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> dml8a <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">3</span>, <span class="hljs-string">"María Sánchez"</span>, <span class="hljs-string">"maria@gmail.com"</span>),
+  (<span class="hljs-number">4</span>, <span class="hljs-string">"Eva Amaral"</span>, <span class="hljs-string">"eva@gmail.com"</span>);
+</div></code></pre>
+<p>Si id fuera un campo auto incrementable podríamos omitir su valor, y automáticamente le asignaría el siguiente valor de la secuencia:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> dml8a(nombre) <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">"José Manuel Pérez"</span>);
+</div></code></pre>
+<p>Si queremos insertar los valores por defectos asociados a una columna o un valor nulo (por ejemplo, a una clave ajena) usaremos DEFAULT y NULL respectivamente. Por ejemplo:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> dml8a <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">66</span>, <span class="hljs-keyword">DEFAULT</span>, <span class="hljs-literal">NULL</span>);
+</div></code></pre>
+<p>Gestión de errores</p>
+<p>Si insertamos datos con tipos diferentes, dejamos campos no nulos en blanco, o insertamos datos en un campo que es clave ajena y no cumplimos la integridad referencial, el SBGD nos devolverá diferentes mensajes:</p>
+<p>FIXME: completar - continuar</p>
+<p>También podemos insertar datos con el resultado de una consulta mediante la instrucción <a href="https://mariadb.com/kb/en/insert-select/">INSERT SELECT</a>, pero esta operación la estudiaremos en profundidad más adelante.</p>
+<h3 id="modificaciones-a-id%22modificaciones%22a"><strong>Modificaciones</strong> <a id="modificaciones"></a></h3>
+<p>La sentencia para actualizar datos es <code>UPDATE ... SET</code> en <a href="https://mariadb.com/kb/en/update">MariaDB</a>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">UPDATE</span> tabla <span class="hljs-keyword">SET</span> campo=valor1 [,campo2=valor2];
+</div></code></pre>
+<p>Si queremos decidir qué elementos modificar, añadimos la expresión WHERE, ya que si no, actualizaremos todos los registros de la tabla:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">UPDATE</span> tabla <span class="hljs-keyword">SET</span> campo=valor <span class="hljs-keyword">WHERE</span> condicion;
+</div></code></pre>
+<p>Veamos unos ejemplos. Podemos modificar el email de un usuario concreto:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">UPDATE</span> dml8a <span class="hljs-keyword">SET</span> email=<span class="hljs-string">"pedro@gmail.com"</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span>=<span class="hljs-number">2</span>
+</div></code></pre>
+<p>O modificar varios campos de una sola vez:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">UPDATE</span> dml8a <span class="hljs-keyword">SET</span> nombre=<span class="hljs-string">"Pedro Casas García"</span>,
+      email=<span class="hljs-string">"pedro.casas@gmail.com"</span>
+  <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span>=<span class="hljs-number">2</span>
+</div></code></pre>
+<p>También podemos realizar cálculos al modificar un campo:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Incrementamos la población de Elche en un 10%</span>
+
+<span class="hljs-keyword">UPDATE</span> CIUDAD <span class="hljs-keyword">SET</span> poblacion = poblacion * <span class="hljs-number">1.10</span> <span class="hljs-keyword">WHERE</span> nombre = <span class="hljs-string">"Elche"</span>;
+</div></code></pre>
+<p>El filtado de los datos mediante la instrucción WHERE ofrece múltiples posibilidades, tanto con operadores relacionales, aritméticos, funciones de tratamiento de textos, fechas, etc... como comparación con el resultado de una consulta u operaciones de conjuntos. A partir de la próxima unidad profundizaremos en todas la alternativas del atributo WHERE.</p>
+<h3 id="borrados-a-id%22borrados%22-a"><strong>Borrados</strong> <a id="#borrados"> </a></h3>
+<p>No te olvides...</p>
+<p>Si no conoces este meme, hazte el favor y mira el siguiente <a href="https://youtu.be/i_cVJgIz_Cs?si=MPgAHrZyaWcfH4On">video</a>.</p>
+<p>Hice un delete...</p>
+<p>La sentencia para actualizar datos es <code> DELETE ... FROM</code> , en <a href="https://mariadb.com/kb/en/delete">MariaDB</a>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">DELETE</span> campo <span class="hljs-keyword">FROM</span> tabla;
+</div></code></pre>
+<p>Si queremos decidir qué elementos eliminar, añadimos la expresión WHERE, ya que si no, eliminaremos todos los registros de la tabla, lo cual es muy peligroso:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">DELETE</span> campo <span class="hljs-keyword">FROM</span> tabla <span class="hljs-keyword">WHERE</span> condicion;
+</div></code></pre>
+<p>Integridad referencial</p>
+<p>Recuerda que si eliminamos un registro referenciado por una clave ajena, se ejecutará la regla descrita en la tabla de origen, de manera, que es posible que no podamos eliminar ciertos datos al estar referenciado desde otra tabla (si estaban configuradas con NO ACTION o RESTRICT).</p>
+<p>En cambio, si la clave ajena se configuró con CASCADE, al borrar el registro, se borrarán todos los registros de las tabla origen que referenciaban a éste.</p>
+<p>Finalmente, si se configuró con NULL, la tabla origen modificará el valor de su clave ajena se pondrá a nulo.</p>
+<p>Conviene destacar que si queremos eliminar todos los datos de una tabla, es mucho más eficiente utilizar el comando TRUNCATE TABLE, tanto en <a href="https://mariadb.com/kb/en/truncate-table/">MariaDB</a></p>
+<p>TRUNCATE TABLE dml8s</p>
+<p>Por debajo, cuando truncamos una tabla, realmente está eliminando la tabla y volviéndola a crear, eliminando todos los ficheros de datos y reinicinado los campos autonuméricos.</p>
+<h2 id="reto-ii---creamos-a-id%22reto-ii-creamos%22a"><strong>Reto II - Creamos</strong> <a id="#reto-ii-creamos"></a></h2>
+<p>En el <a href="https://aitor-medrano.github.io/bd/02er.html#reto-i-disenamos">reto anterior</a> diseñamos una base de datos. En este reto nos vamos a centrar en la creación del modelo físico, creando y cargando datos, para posteriormente definir una serie de informes y KPIs que generaremos mediante consultas utilizando SQL.</p>
+<p>KPI</p>
+<p>Un KPI (<em>key performance indicator</em>) es una métrica cuantitativa que muestra un valor importante para el negocio, permitiendo comparar el desempeño de alguna característica.</p>
+<p>Ejemplos de KPIs podrian ser la cantidad de pedido realizados durante el último més, beneficios obtenido en el último año, comparación <em>Year-over-year (YoY)</em> de las ventas de este mes respecto a las ventas del mismo mes pero en el año pasado, etc...</p>
+<p>Así pues, inicialmente crearemos la estructura de datos necesaria, la cargaremos con datos ficticios, y deberemos pensar qué información queremos extraer de ella.</p>
+<h2 id="referencias-a-id%22referencias%22a"><strong>Referencias</strong> <a id="referencias"></a></h2>
+<ul>
+<li>Sintaxis SQL oficial de <a href="https://mariadb.com/kb/en/sql-statements/">MariaDB</a>.</li>
+<li>Materiales sobre el módulo de BD:
+<ul>
+<li><a href="https://ioc.xtec.cat/materials/FP/Recursos/fp_dam_m02_/web/fp_dam_m02_htmlindex/WebContent/u5/a2/continguts.html">*DDL</a> _y <a href="https://ioc.xtec.cat/materials/FP/Recursos/fp_dam_m02_/web/fp*dam_m02_htmlindex/WebContent/u5/a1/continguts.html">DML</a> - Institut Obert de Catalunya*</li>
+<li><a href="https://josejuansanchez.org/bd/unidad-04-teoria/index.html">Creación de bases de datos en MySQL</a> de <em>José Juan Sánchez</em></li>
+<li><a href="https://jorgesanchez.net/manuales/sql/intro-sql-sql2016.html">Introducción a SQL</a>, <a href="https://jorgesanchez.net/manuales/sql/ddl-tablas-sql2016.html">DDL</a> y <a href="https://jorgesanchez.net/manuales/sql/dml-sql2016.html">DML</a> de <em>Jorge Sánchez</em></li>
+<li><a href="https://apuntes-daw.javiergutierrez.trade/bases-de-datos/ut5/recopila.html">Tratamiento de datos</a> de <em>Javier Gutiérrez</em></li>
+<li><a href="https://gestionbasesdatos.readthedocs.io/es/latest/Tema3/index.html">Diseño físico de bases de datos - DDL</a> y <a href="https://gestionbasesdatos.readthedocs.io/es/latest/Tema5/index.html">Modificación de bases de datos - DML</a> de gestionbasesdatos.readthedocs.io</li>
+<li><a href="https://www.cs.us.es/cursos/bd-2023/temas/BD-Tema-5.pdf">Introducción a SQL</a>, por <em>Luis Valencia</em> y <em>David Orellana</em>, de la <em>Universidad de Sevilla</em>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="actividadesa-id%22actividades%22a"><strong>Actividades</strong><a id="actividades"></a></h2>
+<ul>
+<li><strong>AC501</strong>.<a id="ac501"></a> (RABD.2 // CE2a // 3p) En <em>MariaDB</em>, descarga la base de datos <a href="https://aitor-medrano.github.io/bd/resources/world.sql.zip">world.sql.zip</a>, y tras descomprimirla y cárgala mediante <em>PhpMyAdmin</em>. A continuación, averigua:
+<ul>
+<li>¿Cuántas tablas tiene?</li>
+<li>¿Cuántos y de qué tipos son los campos de la tabla city?</li>
+<li>¿Cuál es el formato de almacenamiento de la base de datos? ¿Qué motor de almacenamiento emplea?</li>
+</ul>
+</li>
+<li><strong>AP502</strong>.<a id="ap502"></a> (RABD.2 // CE2a // 3p) En <em>PostgreSQL</em>, mediante SQL, crea una base de datos con un <em>tablespace</em> definido previamente y el juego de caracteres que permita el uso de emojis y que no sea <em>case sensitive</em>.</li>
+</ul>
+<p>En dicha tabla, crea una tabla cuya clave sea un valor autonumérico y tenga un atributo que permita introducir cadenas de texto.</p>
+<p>A continuación, mediante <em>PgAdmin</em>, obtén la información tanto de la base de datos como de la tabla, e inserta una frase que contenga algún emoji. Comprueba que la información se ha almacenado correctamente.</p>
+<p>Debes entregar en Aules:</p>
+<ul>
+<li>
+<p>Comandos SQL empleados.</p>
+</li>
+<li>
+<p>Capturas de pantalla de <em>PgAdmin</em> con la información solicitada.</p>
+</li>
+<li>
+<p><strong>AC503</strong>.<a id="ac503"></a> (RABD.2 // CE2b, CE2c, CE2d // 3p) Crea el siguiente modelo relacional en <em>MariaDB</em> y en <em>PostgreSQL</em>, y adjunta tanto las instrucciones DDL como capturas de pantalla con la estructura de las tablas:</p>
+</li>
+<li>
+<p>Tabla FABRICANTE</p>
+<ul>
+<li>Campos:
+<ul>
+<li>codFabricante: entero autoincrementable</li>
+<li>nombre: cadena 32</li>
+<li>pais: cadena 32</li>
+</ul>
+</li>
+<li>Restricciones:
+<ul>
+<li>La clave primaria es codFabricante</li>
+<li>El nombre no puede ser nulo</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Tabla ARTICULO</p>
+<ul>
+<li>Campos:
+<ul>
+<li>codigo: cadena 32</li>
+<li>codFabricante: entero</li>
+<li>peso: numérico con dos decimales</li>
+<li>categoria: cadena 16</li>
+<li>precioVenta: numérico con dos decimales</li>
+<li>precioCompra: numérico con dos decimales</li>
+<li>existencias: entero sin signo</li>
+</ul>
+</li>
+<li>Restricciones:
+<ul>
+<li>La clave primaria es: codigo, codFabricante, peso, categoría.</li>
+<li>La categoria ha de ser primera, segunda o tercera.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Modifica el atributo pais de la tabla FABRICANTE para que el valor por defecto sea España.</li>
+<li>Añade una columna antes de pais en la tabla FABRICANTE para guardar la provincia.</li>
+<li>Renombra la tabla ARTICULO a PRODUCTO.</li>
+</ol>
+<ul>
+<li><strong>AC504</strong>.<a id="ac504"></a> (RABD.2 // CE2e // 3p) A partir del ejercicio <a href="#AC503">AC503</a>, vuelve a indicar la instrucción CREATE TABLE de la tabla PRODUCTO de manera que:
+<ul>
+<li>codFabricante sea una clave ajena que apunta a FABRICANTE.</li>
+<li>al eliminar un fabricante concreto, si hay artículos de dicho fabricante, se deben prohibir la operación. En cambio, si modificamos el código de la tabla FABRICANTE, la clave ajena también cambiará su valor.</li>
+<li>los atributos precioVenta y precioCompra deben de ser mayores de 0.</li>
+</ul>
+</li>
+</ul>
+<p>A continuación, mediante operaciones ALTER TABLE añade las siguientes restricciones:</p>
+<ul>
+<li>La columna PRODUCTO.codFabricante no puede admitir valores nulos.</li>
+<li>El peso debe ser superior o igual a 1.00.</li>
+<li><strong>AR505</strong>. <a id="ar505"></a>(RABD.2 // CE2e // 3p) Mediante <em>MariaDB</em> o <em>PostgreSQL</em>, crea las tablas necesarias para representar que un empleado tiene diferentes números de teléfono que queremos almacenar, teniendo en cuenta que:</li>
+<li>Los teléfonos se presentan mediante un prefijo de tres caracteres y número de 9 dígitos.</li>
+<li>Si eliminamos a un empleado, también eliminaremos todos sus teléfonos.</li>
+</ul>
+<p>Para ello, haciendo uso de la herramienta gráfica apropiada, inserta datos (varios empleados y varios teléfonos para cada empleado) y posteriormente prueba a eliminar un empleado.</p>
+<p>Adjunta tanto los scripts DDL como capturas de las tablas antes y después de realizar la operación de borrado.</p>
+<ul>
+<li>
+<p><strong>AC506</strong>.<a id="ac506"></a> (RABD.2 // CE2b, CE2c, CE2d // 3p) Crea el siguiente modelo relacional en <em>MariaDB</em> y en <em>PostgreSQL</em>:</p>
+<p><strong>DEPARTAMENTO</strong> (codD, nombre, direcc)
+· PK: (codD)
+· VNN: (nombre)</p>
+<p><strong>EMPLEADO</strong> (dni, nombrec, salario, direcc, departamento*)
+· PK: (dni)
+· UK: (nombrec)
+· VNN: (nombrec)
+· VNN: (salario)
+· VNN: (departamento)
+· FK: (departamento) → DEPARTAMENTO</p>
+<p>Además, el salario de cada empleado debe ser igual o superior a 900, y su valor por defecto es de 1000.</p>
+<p>A continuación, mediante haciendo uso de ALTER TABLE:</p>
+<ul>
+<li>Elimina la clave ajena de la tabla EMPLEADO.</li>
+<li>Vuelve a añadir la clave ajena, de manera que al modificar un departamento, el cambio se propague en cascada, pero que al eliminarlo, no realice ningún acción.</li>
+</ul>
+</li>
+</ul>
+<p>Finalmente, elimina las tablas creadas.</p>
+<ul>
+<li>
+<p><strong>AP507</strong>.<a id="ap507"></a> (RABD.2 // CE2b, CE2c, CE2d, CE2e // 3p) A partir de la actividad <a href="#AC407">AC407</a> (que a su vez se basa en la <a href="https://aitor-medrano.github.io/bd/02er.html#AC203">AC203</a>), crea las instrucciones DDL necesarias para crear el modelo físico.</p>
+</li>
+<li>
+<p><strong>AP508</strong>. <a id="ap508"></a>(RABD.4 // CE4a // 3p) Haciendo uso de <em>MariaDB</em> y del cliente mariabd, a partir del siguiente <a href="https://aitor-medrano.github.io/bd/resources/ap508.sql"><em>script</em></a> con las instrucciones para crear una base de datos, carga los datos que tienes disponibles en <a href="https://aitor-medrano.github.io/bd/resources/ap508.zip">ap508.zip</a> haciendo uso de las instrucciones LOAD DATA. Finalmente, mediante mysqldump realiza una exportación de toda la base de datos (con los datos cargados), y adjunta tanto los comandos empleados como el resultado de la exportación.</p>
+</li>
+<li>
+<p><strong>AC509</strong>. <a id="ac509"></a> (RABD.4 // CE4a, CE4b // 3p) A partir de la actividad <a href="https://aitor-medrano.github.io/bd/05ddl.html#AC504">AC504</a>, inserta los siguientes datos utilizando las herramientas gráficas, tanto en <em>MariaDB</em> como en <em>PostgreSQL</em>:</p>
+<ul>
+<li>
+<p>FABRICANTE</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>codFabricante</strong></th>
+<th style="text-align:left"><strong>nombre</strong></th>
+<th style="text-align:left"><strong>provincia</strong></th>
+<th style="text-align:left"><strong>pais</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">Sony</td>
+<td style="text-align:left">Kantō</td>
+<td style="text-align:left">Japón</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">Microsoft</td>
+<td style="text-align:left">Nuevo México</td>
+<td style="text-align:left">USA</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">Nintendo</td>
+<td style="text-align:left">Kantō</td>
+<td style="text-align:left">Japón</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>PRODUCTO</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>codigo</strong></th>
+<th style="text-align:left"><strong>codFabricante*</strong></th>
+<th style="text-align:left"><strong>peso</strong></th>
+<th style="text-align:left"><strong>categoria</strong></th>
+<th style="text-align:left"><strong>precioVenta</strong></th>
+<th style="text-align:left"><strong>precioCompra</strong></th>
+<th style="text-align:left"><strong>existencias</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">PS5</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">4.5</td>
+<td style="text-align:left">primera</td>
+<td style="text-align:left">500.00</td>
+<td style="text-align:left">550.00</td>
+<td style="text-align:left">123</td>
+</tr>
+<tr>
+<td style="text-align:left">PS4</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">2.8</td>
+<td style="text-align:left">primera</td>
+<td style="text-align:left">300.00</td>
+<td style="text-align:left">400.00</td>
+<td style="text-align:left">234</td>
+</tr>
+<tr>
+<td style="text-align:left">XSX</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">4.4</td>
+<td style="text-align:left">primera</td>
+<td style="text-align:left">500.00</td>
+<td style="text-align:left">550.00</td>
+<td style="text-align:left">345</td>
+</tr>
+<tr>
+<td style="text-align:left">NSW</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">0.3</td>
+<td style="text-align:left">segunda</td>
+<td style="text-align:left">225.00</td>
+<td style="text-align:left">330.00</td>
+<td style="text-align:left">456</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>A continuación, indica las sentencias SQL para vaciar las tablas como para introducir los datos.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>AC510</strong>.<a id="ac510"></a> (RABD.4 // CE4b // 3p) Carga el siguiente <a href="https://aitor-medrano.github.io/bd/resources/ac510.sql">script de datos</a> sobre las tablas de la <a href="#AC506">AC506</a>, y realiza las siguentes modificaciones:</p>
+</li>
+<li>
+<p>Añade un nuevo departamento llamado Formación.</p>
+</li>
+<li>
+<p>Renombra el departamento IT por Informática.</p>
+</li>
+<li>
+<p>Añade el campo email al final de la tabla DEPARTAMENTO, y rellenalos todos con email@ac510.com.</p>
+</li>
+<li>
+<p>Incrementa el salario de todos los empleados del departamento de informática en 300€.</p>
+</li>
+<li>
+<p>Inserta un nuevo empleado con tus datos en el departamento Formación.</p>
+</li>
+<li>
+<p>Cambia al empleado 12345678A al departamento de Formación.</p>
+</li>
+<li>
+<p>Modifica la clave del departamento Formación a 666.</p>
+</li>
+<li>
+<p>Elimina el departamento Legal. ¿Has podido? ¿Qué ha pasado con sus empleados?</p>
+</li>
+<li>
+<p><strong>AP511</strong>. <a id="ap511"></a> (RABD.4 // CE4b // 3p) Sobre la actividad <a href="#AC510">AC510</a>, añade una nueva tabla DIETAS donde podamos anotar los gastos ocasionados por las dietas de los empleados, como son la fecha, el coste y una descripción de la misma. A continuación, inserta 10 dietas de diferentes empleados. Debes tener en cuenta que si eliminamos un empleado, no debe permitir realizar la operación ni eliminar las dietas, ya que si no, luego no nos cuadraría la contabilidad. ¿Cómo solucionamos dar de baja a un empleado pero no eliminarlo del sistema?</p>
+</li>
+<li>
+<p><strong>AR512</strong>.<a id="ar512"></a> (RABD.4 // CE4b // 3p) Carga el <em>script</em> <a href="https://aitor-medrano.github.io/bd/resources/ar512.sql">ar512.sql</a> con el DDL sobre una base de datos de libros y préstmos, y realiza las siguientes operaciones:</p>
+</li>
+<li>
+<p>Inserta los siguientes valores en las tablas:</p>
+<ul>
+<li>
+<p>LIBRO</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>codigo</strong></th>
+<th style="text-align:left"><strong>titulo</strong></th>
+<th style="text-align:left"><strong>autor</strong></th>
+<th style="text-align:left"><strong>stock</strong></th>
+<th style="text-align:left"><strong>genero</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">Historia de España</td>
+<td style="text-align:left">J. Pérez</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">HIS</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">Reina Roja</td>
+<td style="text-align:left">J. Gómez-Jurado</td>
+<td style="text-align:left">33</td>
+<td style="text-align:left">NOV</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>PRESTAMO</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>codLibro</strong></th>
+<th style="text-align:left"><strong>codSocio</strong></th>
+<th style="text-align:left"><strong>fentrega</strong></th>
+<th style="text-align:left"><strong>fdevolucion</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">15/10/24</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">25/10/24</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>
+<p>Realiza las siguientes operaciones:</p>
+<ol>
+<li>Cambia la clave primaria de libro al título. Realiza los cambios necesarios para que la tabla libros y prestamos estén relacionadas.</li>
+<li>Eliminar aquellos libros que sean del genero de historia. ¿Se elimina el registro de la tabla LIBRO? Razona la respuesta.
+<ol>
+<li>Si no lo has conseguido, cambia la restricción de la clave ajena para que la operación se propague.</li>
+<li>Vuelve a realizar la operación de borrado de libros.</li>
+<li>¿Cuantos registros tiene ahora la tabla PRESTAMO?</li>
+</ol>
+</li>
+<li>Inserta los siguientes libros (<em>Loba Negra</em>, <em>MariaDB Essentials</em>), buscando en Internet la información que necesites.</li>
+<li>Reduce el stock de Reina Roja en 3 unidades.</li>
+<li>Haz que el libro prestado tenga como fecha de devolución el 31/12/24.</li>
+<li>Cambia el nombre del autor de Reina Roja por Juan Gómez Jurado.</li>
+</ol>
+</li>
+<li>
+<p><strong>AC513</strong>. <a id="ac513"></a>(RABD.2 // CE2a, CE2b, CE2c, CE2d, CE2e // 3p) A partir del siguiente modelo relacional, genera el script DDL (ac513.sql) para la creación de las tablas mediante <em>MariaDB</em> en una base de datos denominada ac513 (el <em>script</em> debe poder ejecutarse una y otra vez, de manera que si ya existe la base de datos debe borrarla, y para crear cada tabla, debe comprobar que no exista previamente).</p>
+</li>
+</ul>
+<p>El diccionario de datos es el siguiente:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>TABLA</strong></th>
+<th style="text-align:left"><strong>CAMPO</strong></th>
+<th style="text-align:left"><strong>TIPO</strong></th>
+<th style="text-align:left"><strong>RESTRICCIONES</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ALUMNOS</td>
+<td style="text-align:left">id</td>
+<td style="text-align:left">Entero sin signo autoincrementable</td>
+<td style="text-align:left">PK</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">dni</td>
+<td style="text-align:left">Carácter (9)</td>
+<td style="text-align:left">UK</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">nombre</td>
+<td style="text-align:left">Texto (64)</td>
+<td style="text-align:left">obligatorio</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">apellidos</td>
+<td style="text-align:left">Texto (64)</td>
+<td style="text-align:left">obligatorio</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">sexo</td>
+<td style="text-align:left">{H, M}</td>
+<td style="text-align:left">obligatorio</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">dirección</td>
+<td style="text-align:left">Texto (128)</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">telefono</td>
+<td style="text-align:left">Carácter (12)</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">fnac</td>
+<td style="text-align:left">Fecha</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">ASIGNATURAS</td>
+<td style="text-align:left">id</td>
+<td style="text-align:left">Entero sin signo autoincrementable</td>
+<td style="text-align:left">PK</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">nombre</td>
+<td style="text-align:left">Texto (64)</td>
+<td style="text-align:left">obligatorio</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">aula</td>
+<td style="text-align:left">entero</td>
+<td style="text-align:left">Entre 1 y 10, por defecto se asigna el aula 1</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">duracion</td>
+<td style="text-align:left">Entero</td>
+<td style="text-align:left">Entre 1 y 12, por defecto su duración es 3</td>
+</tr>
+<tr>
+<td style="text-align:left">NOTAS</td>
+<td style="text-align:left">idAlumno</td>
+<td style="text-align:left">Entero sin signo</td>
+<td style="text-align:left">PK, FK → ALUMNOS</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">idAsignatura</td>
+<td style="text-align:left">Entero sin signo</td>
+<td style="text-align:left">PK, FK → ASIGNATURAS</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">fecha</td>
+<td style="text-align:left">Fecha</td>
+<td style="text-align:left">obligatorio</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">calificación</td>
+<td style="text-align:left">Real</td>
+<td style="text-align:left">Entre 0.0 y 10.0, obligatorio</td>
+</tr>
+</tbody>
+</table>
+<p>A continuación, modifica la estructura de la tablas mediante ALTER TABLE:</p>
+<ul>
+<li>
+<p>Cambia el nombre de las tablas y ponlas en singular.</p>
+</li>
+<li>
+<p>Añade una columna recuperacion a NOTA para almacenar la posible calificación de un examen de recuperación. Dicha calificación debe estar comprendida entre 0 y 10.</p>
+</li>
+<li>
+<p>Modifica la columna sexo de ALUMNO para añadir un tercer valor (indeterminado - I).</p>
+</li>
+<li>
+<p>Modifica la clave primaria de NOTA para incluir también la fecha.</p>
+</li>
+<li>
+<p>Modifica la clave ajena de NOTA hacia ALUMNO para que al realizar un borrado de un alumno, se eliminen todas sus notas.</p>
+</li>
+<li>
+<p><strong>AC514</strong>. <a id="ac514"></a>(RABD.4 // CE4b // 3p) Continua la actividad anterior, y crea el script ac514.sql donde insertes los siguientes datos para el alumnado y los cursos mediante instrucciones INSERT:</p>
+</li>
+<li>
+<p>ALUMNO</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>DNI</strong></th>
+<th style="text-align:left"><strong>Nombre</strong></th>
+<th style="text-align:left"><strong>Apellidos</strong></th>
+<th style="text-align:left"><strong>Sexo</strong></th>
+<th style="text-align:left"><strong>Dirección</strong></th>
+<th style="text-align:left"><strong>Teléfono</strong></th>
+<th style="text-align:left"><strong>Fecha de nacimiento</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">12345678A</td>
+<td style="text-align:left">Johnny</td>
+<td style="text-align:left">Mentero</td>
+<td style="text-align:left">H</td>
+<td style="text-align:left">Debajo del puente, -1</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">25/12/80</td>
+</tr>
+<tr>
+<td style="text-align:left">23456789B</td>
+<td style="text-align:left">María</td>
+<td style="text-align:left">Gracia</td>
+<td style="text-align:left">M</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">636112233</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">34567890C</td>
+<td style="text-align:left">Armando</td>
+<td style="text-align:left">Casas</td>
+<td style="text-align:left">I</td>
+<td style="text-align:left">Villarriba, 33</td>
+<td style="text-align:left">636223344</td>
+<td style="text-align:left">31/12/90</td>
+</tr>
+<tr>
+<td style="text-align:left">45678901D</td>
+<td style="text-align:left">Mario</td>
+<td style="text-align:left">Neta</td>
+<td style="text-align:left">H</td>
+<td style="text-align:left">Circo del Sol, 22</td>
+<td style="text-align:left">636334455</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">56789012E</td>
+<td style="text-align:left">Susana</td>
+<td style="text-align:left">Oria</td>
+<td style="text-align:left">M</td>
+<td style="text-align:left">Calle La Granja</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">3/1/00</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>ASIGNATURA</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>id</strong></th>
+<th style="text-align:left"><strong>Nombre</strong></th>
+<th style="text-align:left"><strong>Aula</strong></th>
+<th style="text-align:left"><strong>Duración</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">SQL</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">9</td>
+</tr>
+<tr>
+<td style="text-align:left">666</td>
+<td style="text-align:left">Humor</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">12</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Cocina</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>A continuación, inserta los siguientes datos de calificaciones mediante LOAD DATA, creando previamente el archivo ac514.csv con la siguiente información:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>Alumno</strong></th>
+<th style="text-align:left"><strong>Asignatura</strong></th>
+<th style="text-align:left"><strong>Fecha</strong></th>
+<th style="text-align:right"><strong>Nota</strong></th>
+<th style="text-align:right"><strong>Recuperación</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">20/12/20</td>
+<td style="text-align:right">7,25</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">666</td>
+<td style="text-align:left">20/12/20</td>
+<td style="text-align:right">9,99</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">10/1/21</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">666</td>
+<td style="text-align:left">10/1/21</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">10/1/21</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">6</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">666</td>
+<td style="text-align:left">10/1/21</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">6</td>
+</tr>
+</tbody>
+</table>
+<p>Finalmente, realiza las siguientes operaciones de modificación y borrado de datos:</p>
+<ol>
+<li>Modificar:
+<ol>
+<li>El teléfono del alumno 1 es 666111222</li>
+<li>La dirección de todos los alumnos hombres es Donde me lleve la vida.</li>
+<li>El apellido de todos alumnos que se llamen Armando ahora es Bullas.</li>
+<li>Todos los cursos tendrán una unidad más de duración</li>
+<li>Los alumnos que no tengan dirección se les asignará Internet.</li>
+</ol>
+</li>
+<li>Eliminar:
+<ol>
+<li>Borra las calificaciones inferiores a 4. ¿has podido? ¿cuantas calificaciones quedan?</li>
+<li>Borra la información de Johnny Mentero. ¿has podido? ¿cuantos calificaciones quedan?</li>
+<li>Elimina el curso de cocina ¿has podido? ¿cuantas asignaturas quedan?</li>
+<li>Elimina los alumnos que no tengan teléfono ¿has podido? ¿cuantos alumnos quedan? ¿cuantas calificaciones quedan?</li>
+<li>Elimina todos los alumnos ¿has podido? ¿cuantos alumnos quedan? ¿cuantas calificaciones quedan?</li>
+</ol>
+</li>
+</ol>
+<p>Recuerda que para comprobar los datos que contiene una tabla puedes ejecutar en el cliente SELECT * FROM tabla;</p>
+<ul>
+<li>
+<p><strong>PR515</strong>.<a id="pr515"></a> (RABD.2, RABD.4 // CE2a, CE2b, CE2c, CE2d, CE2e, CE4a, CE4b // 10p) A partir del modelo diseñado en la actividad <a href="#PY414">PY414</a> asociada al primer reto de diseño de la base de datos, ahora nos vamos a centrar en crear el modelo físico y cargar datos para trabajar con él. Para ello, como equipo, deberéis decantaros por un SGBD en concreto.</p>
+<p>Para ello, se pide:</p>
+<ul>
+<li>Informe con el modelo ER, el modelo MR y justificacion de las decisiones tomadas respecto a las restricciones incluidas en el modelo físico.</li>
+<li>Script SQL con las sentencias DDL.</li>
+<li>Script SQL con las sentencias DML para cargar datos.</li>
+<li>Script SQL para vaciar todas las tablas.</li>
+</ul>
+<p>Se utilizará una rúbrica para su evaluación en base a la siguiente lista de cotejo:</p>
+<ul>
+<li>Limpieza y calidad de los scripts.</li>
+<li>Documentación de los scripts.</li>
+<li>El informe entregado no contiene faltas de ortografía.</li>
+<li>El informe entregado tiene un formato adecuado (portada, apartados, autores, etc...).</li>
+<li>Cada tabla contiene un mínimo de 10 registros, salvo justificación.</li>
+<li>En el caso de existir relaciones entre tablas, cada registro debe relacionarse con un mínimo de tres registros más.</li>
+</ul>
+</li>
+<li>
+<p><strong>AR516</strong>.<a id="ar516"></a> (RABD.6 // CE6b, CE6c, CE6d, CE6e // 3p) Una vez finalizada la unidad, responde todas las preguntas del cuestionario inicial, con al menos un par de líneas para cada una de las cuestiones.</p>
+</li>
+</ul>
+
+</body>
+</html>

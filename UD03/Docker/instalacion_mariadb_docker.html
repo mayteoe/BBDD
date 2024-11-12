@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>1 Creaci&oacute;n de un contenedor Docker con MariaDB</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="1-creación-de-un-contenedor-docker-con-mariadb">1 Creación de un contenedor Docker con MariaDB</h1>
+<h2 id="11-requisitos">1.1 Requisitos</h2>
+<p>Para poder ejecutar contenedores Docker es necesario tener instalado Docker Community Edition (CE) en nuestra máquina virtual. En concreto la instalaremos en un sistema operativo Debian 12.7</p>
+<h2 id="12-descargar-la-imagen-de-mariadb">1.2 Descargar la imagen de mariadb</h2>
+<p>Par poder descargar la imagen de mariadb de DockerHub usaremos el comando:</p>
+<pre><code class="language-bash">  docker pull mariadb
+</code></pre>
+<p>Si usamos el comando <code>docker images</code> comprobamos las imágenes que tenemos descargadas en nuestro repositorio local</p>
+<h2 id="13-cómo-crear-un-contenedor">1.3 Cómo crear un contenedor</h2>
+<p>Para crear un contenddo Docker utilzaremos <code>docker run</code>. Si no decimos nada el contenedor que creemos no tendrá persistencia de datos.
+Un contenedor Docker que no tiene persistencia de datos quiere decir que cuando finalice la ejecución perderá todo el contenido que hayamos creado durante la ejecución. Es decir, si durante la ejecución del contenedor hemos creado varias bases de datos en MariaDB, éstas se perderán cuando el contenedor se detenga.</p>
+<p>El comando que podríamos usar para lanzar nuestro contenedor Docker con MariaDB sin persistencia de datos podría ser el siguiente:</p>
+<pre><code class="language-bash">docker run -d --<span class="hljs-built_in">rm</span> --name migbd -e MARIADB_ROOT_PASSWORD=root -p 3306:3306 mariadb
+</code></pre>
+<ul>
+<li>
+<p><code>docker run </code>es  el comando que nos permite crear un contenedor a partir de una imagen Docker.</p>
+</li>
+<li>
+<p>El parámetro <code>-d </code>nos permite ejecutar el contenedor en modo detached, es decir, ejecutándose en segundo plano.</p>
+</li>
+<li>
+<p>El parámetro <code>--rm</code> hace que cuando salgamos del contenedor, éste se elimine y no ocupe espacio en nuestro disco.</p>
+</li>
+<li>
+<p>El parámetro <code>--name</code> nos permite asignarle un nombre a nuestro contenedor. Si no le asignamos un nombre Docker nos asignará un nombre automáticamente.</p>
+</li>
+<li>
+<p>El parámetro <code>-e</code> es para pasarle al contenedor una variable de entorno. En este caso le estamos pasando la variable de entorno MYSQL_ROOT_PASSWORD con el valor de la contraseña que tendrá el usuario root para MySQL Server.</p>
+</li>
+<li>
+<p>El parámetro <code>-p</code> nos permite mapear los puertos entre nuestra máquina local y el contenedor. En este caso, estamos mapeando el puerto 3306 de nuestra máquina local con el puerto 3306 del contenedor.</p>
+</li>
+<li>
+<p><code>mariadb</code> es el nombre de la imagen. Si no indicamos la versión utilizará la última disponible. Si no se indica lo contrario buscará las imágenes en el repositorio oficial Docker Hub.</p>
+</li>
+</ul>
+<p>Una vez realizado el comando podemos ver todos los contenedores que tenemos en ejecución utilizando:</p>
+<pre><code class="language-bash">docker ps -a
+</code></pre>
+<p>En este momento el sistema gestor de base de datos está enlazado y ejecutándose y ya podríamos empezar a crear bases de datos.</p>
+<h2 id="14-cómo-crear-un-contenedor-con-persistencia-de-datos">1.4 Cómo crear un contenedor con persistencia de datos</h2>
+<p>Si queremos que los datos del contenedor sean persistentes tenemos que crear un volumen donde vamos a indicar el directorio de nuestra máquina local donde vamos a almacenar el directorio <code>/var/lib/mysql</code>, que es el directorio que utiliza MariaDB para almacenar las bases de datos.</p>
+<p>Para crear un volumen utilizamos el parámetro <code>-v</code>.</p>
+<p>Docker nos ofrece dos posibilidades para implementar persistencia de datos en los contenedores:</p>
+<ol>
+<li>
+<ul>
+<li><code>bind mount</code>: pueden estar almacenados en cualquier directorio del sistema de archivos de la máquina host. Estos archivos pueden ser consultados o modificados por otros procesos de la máquina host o incluso por otros contenedores Docker.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><code>volume</code>: se almacenan en la máquina host dentro del área del sistema de archivos que gestiona Docker. Otros procesos de la máquina host no deberían modificar estos archivos, sólo deberían ser modificados por contenedores Docker.</li>
+</ul>
+</li>
+</ol>
+<p><img src="file:///c:\Users\Mayte\OneDrive - Consejería de Educación, Cultura y Deportes Castilla La-Mancha\curso 2024-25\BBDDe-learning\UD01\images\volumenes.png" alt="Volumenes" title="Volumnenes docher"></p>
+<p><strong>Ejemplo</strong> de uso del parámetro <code>-v</code> para crear un volumen de tipo <code>bind_mount</code> :</p>
+<p><code>-v /home/alumno/bbdd:/var/lib/mysql</code></p>
+<p>En este caso el directorio <code>/home/alumno/bbdd</code> de nuestra máquina local estará sincronizado con el directorio <code>/var/lib/mysql</code> del contenedor con MariaDB. Cuidado!!! el directorio bbdd debe de existir en nuestra máquina virtual. Si no existe créala utilizando el comando <code> mkdir /home/alumno/bbdd</code></p>
+<p>El comando que podríamos usar para lanzar nuestro contenedor Docker con MariaDB con persistencia de datos en un volumen podría ser el siguiente:</p>
+<pre><code class="language-bash">docker run -d --<span class="hljs-built_in">rm</span> --name migbd -e MARIADB_ROOT_PASSWORD=root -p 3306:3306 -v /home/alumno/bbdd:/var/lib/mysql mariadb
+</code></pre>
+<p><strong>Ejemplo</strong>  de uso del parámetro <code>-v</code> para crear un volumen de tipo <code>volume</code>:</p>
+<ol>
+<li>Primero tenemos que crear un volumen docker:</li>
+</ol>
+<pre><code class="language-bash"> docker volume create datos_mariadb
+</code></pre>
+<ol start="2">
+<li>Uso del parámetro <code>-v</code> con un volumen de tipo <code>volume</code>:</li>
+</ol>
+<p><code>-v datos_mariadb:/var/lib/mysql</code></p>
+<ol start="3">
+<li>El comando que podríamos usar para lanzar nuestro contenedor Docker con MariaDB con persistencia de datos en un volumen podría ser el siguiente:</li>
+</ol>
+<pre><code class="language-bash">docker run -d --<span class="hljs-built_in">rm</span> --name migbd -e MARIADB_ROOT_PASSWORD=root -p 3306:3306 -v mariadb_data:/var/lib/mysql mariadb
+
+</code></pre>
+<ul>
+<li>
+<p><code>docker run</code> es el comando que nos permite crear un contenedor a partir de una imagen Docker.</p>
+</li>
+<li>
+<p>El parámetro <code>-d</code> nos permite ejecutar el contenedor en modo detached, es decir, ejecutándose en segundo plano.</p>
+</li>
+<li>
+<p>El parámetro <code>--rm</code> hace que cuando salgamos del contenedor, éste se elimine y no ocupe espacio en nuestro disco.</p>
+</li>
+<li>
+<p>El parámetro <code>--name</code> nos permite asignarle un nombre a nuestro contenedor. Si no le asignamos un nombre Docker nos asignará un nombre automáticamente.</p>
+</li>
+<li>
+<p>El parámetro <code>e</code> es para pasarle al contenedor una variable de entorno. En este caso le estamos pasando la variable de entorno <code>MARIADB_ROOT_PASSWORD</code> con el valor de la contraseña que tendrá el usuario root para MARIADB Server.</p>
+</li>
+<li>
+<p>El parámetro <code>-p</code> nos permite mapear los puertos entre nuestra máquina local y el contenedor. En este caso, estamos mapeando el puerto <code>3306</code> de nuestra máquina local con el puerto <code>3306</code> del contenedor.</p>
+</li>
+<li>
+<p>El parámetro <code>-v</code> nos permite crear un volumen para tener persistencia de datos al finalizar el contenedor.</p>
+</li>
+<li>
+<p><code>mariadb</code> es el nombre de la imagen. Si no indicamos la versión utilizará la última versión disponible que está etiquetada como <code>latest</code>. Si no se indica lo contrario buscará las imágenes en el repositorio oficial Docker Hub.</p>
+</li>
+</ul>
+<h2 id="15-cómo-comprobar-que-el-contenedor-está-en-ejecución">1.5 Cómo comprobar que el contenedor está en ejecución</h2>
+<p>Una vez que hemos iniciado el contenedor podemos comprobar que se está ejecutando con el siguiente comando:</p>
+<pre><code class="language-bash">docker ps
+</code></pre>
+<p>Deberíamos obtener una salida similar a esta.</p>
+<pre><code class="language-bash">|CONTAINER ID  | IMAGE     | COMMAND                 | CREATED       | STATUS         | PORTS                  |  NAMES
+|52bcaee9a157  | mariadb   | <span class="hljs-string">&quot;docker-entrypoint.s…&quot;</span>  | 4 seconds ago | Up 2 seconds   | 0.0.0.0:3306-&gt;3306/tcp |  migbd
+</code></pre>
+<h2 id="16-cómo-conectar-con-mariadb">1.6 Cómo conectar con MariaDB</h2>
+<p>Una vez que MariaDB está en ejecución podemos conectarnos con cualquier cliente: MySQL Workbench, PHPMyAdmin, Adminer, etc.</p>
+<p>Los datos de conexión serán:</p>
+<pre><code class="language-bash">Host: 127.0.0.1
+Puerto: 3306
+Usuario: root
+Password: root
+</code></pre>
+<h3 id="161-acceder-mediante-una-consola-interactiva">1.6.1 Acceder mediante una consola interactiva</h3>
+<ol>
+<li>Usamos el comando docker exec para acceder a la consola de un contenedor en ejecución de forma interactiva. La sintaxis general es la siguiente:</li>
+</ol>
+<pre><code class="language-bash">docker <span class="hljs-built_in">exec</span> -it &lt;nombre_o_id_del_contenedor&gt; bash
+</code></pre>
+<p>En nuestro caso como el contenedor se llama migbd:</p>
+<pre><code class="language-bash">docker <span class="hljs-built_in">exec</span> -ti  migbd bash 
+</code></pre>
+<p>Este comando te llevará a una terminal interactiva dentro del contenedor.</p>
+<ol start="2">
+<li>Ejecutar el cliente de MariaDB:
+Una vez dentro de la terminal del contenedor escribimos</li>
+</ol>
+<pre><code class="language-bash">  mariadb -u root -proot
+</code></pre>
+<p>Utilizaremos el parámetro <code>-p</code> para especificar la ocontraseña. No debemos dejar ningún espacio en blanco.
+Esto abrirá el cliente de MariaDB.</p>
+<ol start="3">
+<li>Comprobar las bases de datos creadas</li>
+</ol>
+<pre><code class="language-bash">     show databases;
+</code></pre>
+<ol start="4">
+<li>Salir del cliente y del contenedor:
+Para salir del cliente de MariaDB, escribe el comando <code>exit</code> o <code>quit</code> o presiona <code>Ctrl + D</code>.
+Para salir de la consola del contenedor, también puedes usar <code>exit</code> o <code>Ctrl + D</code>.</li>
+</ol>
+<h3 id="162-utilizando-un-cliente-de-mariadb">1.6.2 Utilizando un cliente de mariadb</h3>
+<ol>
+<li>Instalar el cliente de mariadb: Para instalar el cliente de mariadb en nuestra máquina virtual debian,buscaremos usando el comando <code>apt search</code> los paquetes que podemos instalar. Cuando ya lo hemos encontrado utilizamos el comando:</li>
+</ol>
+<pre><code class="language-bash">sudo apt install mariadb-client
+</code></pre>
+<ol start="2">
+<li>Verificamos la instalación: Una vez que se haya instalado, puedes verificarlo ejecutando el cliente de MariaDB con el siguiente comando</li>
+</ol>
+<pre><code class="language-bash">mysql --version
+</code></pre>
+<ol start="3">
+<li>Abrir el cliente de MariaDB:
+Una vez instalado, nos conectarte al servidor MariaDB local usando el comando mysql:</li>
+</ol>
+<pre><code class="language-bash">mysql -u nombre_de_usuario -p -h nombre_del_host
+</code></pre>
+<p>En nuestro caso especificaremos:</p>
+<pre><code class="language-bash">mysql -u root -proot -h 127.0.0.1
+</code></pre>
+<p>Y como podemos comprobar hemos accedido al servidor de bases de datos MariaDB que está corriendo en el contenedor docker.</p>
+<ol start="4">
+<li>Comprobar las bases de datos creadas</li>
+</ol>
+<pre><code class="language-bash">     show databases;
+</code></pre>
+<ol start="5">
+<li>Salir del cliente y del contenedor:
+Para salir del cliente de MariaDB, escribe el comando <code>exit</code> o <code>quit</code> o presiona <code>Ctrl + D</code>.</li>
+</ol>
+<h2 id="17-cómo-detener-el-contenedor">1.7 Cómo detener el contenedor</h2>
+<p>Para detener el contenedor en primer lugar tenemos que conocer cuál es su ID.
+Para obtener el ID del contenedor podemos hacer uso del comando <code>docker ps</code>.</p>
+<pre><code class="language-bash">docker ps
+</code></pre>
+<pre><code class="language-bash">
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+52bcaee9a157        mariadb             <span class="hljs-string">&quot;docker-entrypoint.s…&quot;</span>   4 seconds ago       Up 2 seconds        0.0.0.0:3306-&gt;3306/tcp   migbd
+</code></pre>
+<p>En la primera columna podemos ver cuál es el CONTAINER ID. Una vez localizado el identificador ejecutamos el comando docker stop y le pasamos como parámetro el identificador del contenedor que queremos detener.</p>
+<p>Para el caso anterior deberíamos ejecutar:</p>
+<pre><code class="language-bash">docker stop migbd
+</code></pre>
+
+            
+            
+        </body>
+        </html>
