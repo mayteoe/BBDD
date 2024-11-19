@@ -404,8 +404,8 @@ code {
 <li>¿Para qué sirve el comando INSERT INTO?</li>
 <li>¿Qué sucede si omitimos el WHERE en un DELETE FROM?</li>
 </ol>
-<h3 id="programaci%C3%B3n-de-aula-11h-a-id%22programacion-de-aula%22a"><strong>Programación de Aula (11h)</strong> <a id="programacion-de-aula"></a></h3>
-<p>Esta unidad es la quinta, con lo que se imparte en la primera evaluación, a finales del mes de noviembre, con una duración estimada de 11 sesiones lectivas:</p>
+<h3 id="programaci%C3%B3n-de-aula-20h-a-id%22programacion-de-aula%22a"><strong>Programación de Aula (20h)</strong> <a id="programacion-de-aula"></a></h3>
+<p>Esta unidad es la tercera, con lo que se imparte en la primera evaluación, a mediados del mes de noviembre, con una duración estimada de 11 sesiones lectivas:</p>
 <table>
 <thead>
 <tr>
@@ -419,7 +419,7 @@ code {
 <tr>
 <td style="text-align:center">1</td>
 <td style="text-align:center"><a href="#modelo-fisico">Modelo físico</a>. Puesta en marcha</td>
-<td style="text-align:center"><a href="#ac501">AC501</a></td>
+<td style="text-align:center"><a href="#AC301">AC301</a></td>
 <td style="text-align:center">CE2a</td>
 </tr>
 <tr>
@@ -431,19 +431,19 @@ code {
 <tr>
 <td style="text-align:center">3</td>
 <td style="text-align:center"><a href="#tablas">DDL Tablas</a></td>
-<td style="text-align:center"><a href="#ac503">AC503</a></td>
+<td style="text-align:center"><a href="#AC303">AC303</a></td>
 <td style="text-align:center">CE2b, CE2c, CE2d</td>
 </tr>
 <tr>
 <td style="text-align:center">4</td>
 <td style="text-align:center"><a href="#restricciones">Restricciones</a></td>
-<td style="text-align:center"><a href="#ac504">AC504</a></td>
+<td style="text-align:center"><a href="#AC304">AC304</a></td>
 <td style="text-align:center">CE2e</td>
 </tr>
 <tr>
 <td style="text-align:center">5</td>
 <td style="text-align:center">Supuesto DDL</td>
-<td style="text-align:center"><a href="#ac506">AC506</a></td>
+<td style="text-align:center"><a href="#AC306">AC306</a></td>
 <td style="text-align:center">CE2b, CE2c, CE2d, CE2e</td>
 </tr>
 <tr>
@@ -455,31 +455,31 @@ code {
 <tr>
 <td style="text-align:center">7</td>
 <td style="text-align:center">DML. <a href="#inserciones">Inserciones</a></td>
-<td style="text-align:center"><a href="#ac509">AC509</a></td>
+<td style="text-align:center"><a href="#AC309">AC309</a></td>
 <td style="text-align:center">CE4a, CE4b</td>
 </tr>
 <tr>
 <td style="text-align:center">8</td>
 <td style="text-align:center">DML. <a href="#modificaciones">Actualizaciones</a> y <a href="#borrados">Borrados</a></td>
-<td style="text-align:center"><a href="#ac510">AC510</a></td>
+<td style="text-align:center"><a href="#AC310">AC310</a></td>
 <td style="text-align:center">CE4b</td>
 </tr>
 <tr>
 <td style="text-align:center">9</td>
 <td style="text-align:center">Supuesto DDL-DML I</td>
-<td style="text-align:center"><a href="#ac513">AC513</a></td>
+<td style="text-align:center"><a href="#AC313">AC313</a></td>
 <td style="text-align:center">CE2b, CE2c, CE2d, CE2e</td>
 </tr>
 <tr>
 <td style="text-align:center">10</td>
 <td style="text-align:center">Supuesto DDL-DML II</td>
-<td style="text-align:center"><a href="#ac514">AC514</a></td>
+<td style="text-align:center"><a href="#AC314">AC314</a></td>
 <td style="text-align:center">CE4b</td>
 </tr>
 <tr>
 <td style="text-align:center">11</td>
 <td style="text-align:center">Reto - Diseño físico</td>
-<td style="text-align:center"><a href="#pr515">PR515</a></td>
+<td style="text-align:center"><a href="#pr315">PR315</a></td>
 <td style="text-align:center">CE2a, CE2b, CE2c, CE2d, CE2e, CE4a, CE4b</td>
 </tr>
 </tbody>
@@ -562,8 +562,8 @@ code {
 <p>SELECT nombre, dni FROM cliente WHERE salario &gt; 100;</p>
 <p>SELECT * FROM cliente WHERE salario &gt; 100 ORDER BY salario;</p>
 <p>SELECT DISTINCT nombre</p>
-<p><code>  </code>FROM cliente</p>
-<p><code>  </code>ORDER BY salario DESC;</p>
+<p>FROM cliente</p>
+<p>ORDER BY salario DESC;</p>
 <h2 id="ddl-a-id%22ddl%22a"><strong>DDL</strong> <a id="ddl"></a></h2>
 <p>Al empezar esta unidad habíamos comentado que DDL es el lenguaje encargado de definir las estructuras de las bases de datos, esto es, permite la creación, modificación y eliminación de los objetos de la base de datos (metadatos), como, por ejemplo, las bases de datos, tablas, índices o vistas.</p>
 <p>TRUNCATE</p>
@@ -575,14 +575,16 @@ code {
 <li>DROP: empleado para eliminar las tablas y los índices.</li>
 </ul>
 <h3 id="puesta-en-marcha-a-id%22puesta-en-marcha%22a"><strong>Puesta en marcha</strong> <a id="puesta-en-marcha"></a></h3>
-<p>Para trabajar con un SGBD tenemos varias posibilidades. Una de ellas es mediante una solución ya desplegada en la nube, como veremos en la siguiente unidad. La segunda sería que lo instalásemos en nuestro sistema operativo mediante las instrucciones que ofrecen en sus páginas web, o bien utilizar uno de los paquetes &quot;todo incluido&quot; que ofrecen plataformas como <a href="https://bitnami.com/">Bitnami</a> (ya sea <a href="https://www.apachefriends.org/bitnami_for_xampp.html">XAMPP</a> u otro paquete). Nosotros nos hemos decantado por la tercera posibilidad, el uso de contenedores <a href="https://www.docker.com/">Docker</a> para aislar los servicios que utilicemos con lo que tengamos instalado en nuestros ordenadores. Por ello, en <a href="https://aitor-medrano.github.io/bd/00entorno.html">Entornos</a> tiene toda la información necesaria tanto para poner en marcha <a href="https://aitor-medrano.github.io/bd/00entorno.html#mariadb">MariaDB</a> como <a href="https://aitor-medrano.github.io/bd/00entorno.html#postgresql">PostgreSQL</a>.</p>
-<p>Una vez instalados los SGBD y conectados a los mismos, ya sean mediante la consola o la interfaz gráfica, debemos saber que aunque el 90% de la sintaxis de SQL es común, cada SGBD tiene sus particularidades. Es por ello, que en este curso vamos a trabajar con <em>MariaDB</em> y <em>PostgreSQL</em> de manera indistinta.</p>
+<!--
+Para trabajar con un SGBD tenemos varias posibilidades. Una de ellas es mediante una solución ya desplegada en la nube, como veremos en la siguiente unidad. La segunda sería que lo instalásemos en nuestro sistema operativo mediante las instrucciones que ofrecen en sus páginas web, o bien utilizar uno de los paquetes "todo incluido" que ofrecen plataformas como [Bitnami](https://bitnami.com/) (ya sea [XAMPP](https://www.apachefriends.org/bitnami_for_xampp.html) u otro paquete). Nosotros nos hemos decantado por la tercera posibilidad, el uso de contenedores [Docker](https://www.docker.com/) para aislar los servicios que utilicemos con lo que tengamos instalado en nuestros ordenadores. Por ello, en [Entornos](https://aitor-medrano.github.io/bd/00entorno.html) tiene toda la información necesaria tanto para poner en marcha [MariaDB](https://aitor-medrano.github.io/bd/00entorno.html#mariadb) como [PostgreSQL](https://aitor-medrano.github.io/bd/00entorno.html#postgresql).
+-->
+<p>Una vez instalados los SGBD y conectados a los mismos, ya sean mediante la consola o la interfaz gráfica, debemos saber que aunque el 90% de la sintaxis de SQL es común, cada SGBD tiene sus particularidades. Es por ello, que en este curso vamos a trabajar con <em>MariaDB</em> y <em>Postgress</em> de manera indistinta.</p>
 <p>Recuerda que todas las instrucciones terminan en ; y que vamos a dejar en MAYÚSCULAS las <em>keywords</em> para facilitar la lectura, aunque no es obligatorio escribirlas así.</p>
 <p>Autoevaluación</p>
-<p>En este momento deberías tener tanto <em>MariaDB</em> como <em>PostgreSQL</em> instalado en local y ser capaz de conectarte desde la línea de comandos.</p>
+<p>En este momento deberías tener tanto <em>MariaDB</em> como <em>Oracle</em> instalado en tu máquina debian y ser capaz de conectarte desde la línea de comandos.</p>
 <p>Una vez dentro, ejecuta los siguientes comandos y comprueba si entiendes qué realiza cada una de las siguientes sentencias:</p>
 <p>![ref4]![ref1]</p>
-<p><a href="#__tabbed_1_1">MariaDB</a><a href="#__tabbed_1_2">PostgreSQL</a></p>
+<p><a href="#__tabbed_1_1">MariaDB</a><a href="#__tabbed_1_2">Postgress</a></p>
 <pre class="hljs"><code><div><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">DATABASES</span>;
 
 <span class="hljs-keyword">USE</span> mibd;
@@ -603,7 +605,7 @@ code {
 
     nombre <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">64</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>);
 
-<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> ejemplo8a <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">"Aitor Medrano"</span>);
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> ejemplo8a <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">"Pedro Picapiedra"</span>);
 
 <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> ejemplo8a;
 </div></code></pre>
@@ -704,7 +706,7 @@ code {
 <p>Además de utf8, latin1y ascii ya comentados previamente, una codificación muy empleado es <strong>utf8mb4</strong>, la cual es una extensión de utf8 que permite almacenar todos los caracteres de <em>Unicode</em>, incluidos emojis y otros símbolos que no se pueden representar en utf8.</p>
 <p>Además, luego para cada juego de caracteres, tenemos sus colaciones. Por ejemplo, el juego de caracteres utf8 tiene varias colaciones como:</p>
 <ul>
-<li>utf8<em>general_ci: Colación insensible a mayúsculas/minúsculas (_case-insensitive</em>).</li>
+<li>utf8_general_ci: Colación insensible a mayúsculas/minúsculas (_case-insensitive*).</li>
 <li>utf8_bin: Colación binaria, sensible a mayúsculas/minúsculas y que compara los caracteres basándose en sus valores binarios.</li>
 </ul>
 <pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> mi_base_de_datos
@@ -980,7 +982,7 @@ estado animo;
 </div></code></pre>
 <p>Volveremos a esta posibilidad cuando aprendamos a realizar consultas mediante SQL:</p>
 <h4 id="modificando-tablas-a-id%22modificando-tablas%22a"><strong>Modificando tablas</strong> <a id="modificando-tablas"></a></h4>
-<p>Una vez creada una tabla, podemos modifica su estructura mediante las sentencias <code>**ALTER TABLE**</code>,  en <a href="https://mariadb.com/kb/en/alter-table/">MariaDB</a></p>
+<p>Una vez creada una tabla, podemos modifica su estructura mediante las sentencias <code>**ALTER TABLE**</code>, en <a href="https://mariadb.com/kb/en/alter-table/">MariaDB</a></p>
 <p>Para añadir columnas, usaremos la opción <strong>ADD</strong>:</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> nombreTabla <span class="hljs-keyword">ADD</span> (
 
@@ -1429,18 +1431,21 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 </ul>
 <h2 id="actividadesa-id%22actividades%22a"><strong>Actividades</strong><a id="actividades"></a></h2>
 <ul>
-<li><strong>AC501</strong>.<a id="ac501"></a> (RABD.2 // CE2a // 3p) En <em>MariaDB</em>, descarga la base de datos <a href="https://aitor-medrano.github.io/bd/resources/world.sql.zip">world.sql.zip</a>, y tras descomprimirla y cárgala mediante <em>PhpMyAdmin</em>. A continuación, averigua:
+<li>
+<p><strong>AC301</strong>.<a id="AC301"></a> (RABD.2 // CE2a // 3p) En <em>MariaDB</em>, descarga la base de datos <a href="https://aitor-medrano.github.io/bd/resources/world.sql.zip">world.sql.zip</a>, y tras descomprimirla y cárgala mediante <em>PhpMyAdmin</em>. A continuación, averigua:</p>
 <ul>
 <li>¿Cuántas tablas tiene?</li>
 <li>¿Cuántos y de qué tipos son los campos de la tabla city?</li>
 <li>¿Cuál es el formato de almacenamiento de la base de datos? ¿Qué motor de almacenamiento emplea?</li>
 </ul>
 </li>
-<li><strong>AP502</strong>.<a id="ap502"></a> (RABD.2 // CE2a // 3p) En <em>PostgreSQL</em>, mediante SQL, crea una base de datos con un <em>tablespace</em> definido previamente y el juego de caracteres que permita el uso de emojis y que no sea <em>case sensitive</em>.</li>
+<li>
+<p><strong>AP302</strong>.<a id="AP302"></a> (RABD.2 // CE2a // 3p) En <em>PostgreSQL</em>, mediante SQL, crea una base de datos con un <em>tablespace</em> definido previamente y el juego de caracteres que permita el uso de emojis y que no sea <em>case sensitive</em>.</p>
+</li>
 </ul>
 <p>En dicha tabla, crea una tabla cuya clave sea un valor autonumérico y tenga un atributo que permita introducir cadenas de texto.</p>
 <p>A continuación, mediante <em>PgAdmin</em>, obtén la información tanto de la base de datos como de la tabla, e inserta una frase que contenga algún emoji. Comprueba que la información se ha almacenado correctamente.</p>
-<p>Debes entregar en Aules:</p>
+<p>Debes entregar en el aula_virtual:</p>
 <ul>
 <li>
 <p>Comandos SQL empleados.</p>
@@ -1449,7 +1454,7 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 <p>Capturas de pantalla de <em>PgAdmin</em> con la información solicitada.</p>
 </li>
 <li>
-<p><strong>AC503</strong>.<a id="ac503"></a> (RABD.2 // CE2b, CE2c, CE2d // 3p) Crea el siguiente modelo relacional en <em>MariaDB</em> y en <em>PostgreSQL</em>, y adjunta tanto las instrucciones DDL como capturas de pantalla con la estructura de las tablas:</p>
+<p><strong>AC303</strong>.<a id="AC303"></a> (RABD.2 // CE2b, CE2c, CE2d // 3p) Crea el siguiente modelo relacional en <em>MariaDB</em> y en <em>PostgreSQL</em>, y adjunta tanto las instrucciones DDL como capturas de pantalla con la estructura de las tablas:</p>
 </li>
 <li>
 <p>Tabla FABRICANTE</p>
@@ -1498,31 +1503,46 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 <li>Renombra la tabla ARTICULO a PRODUCTO.</li>
 </ol>
 <ul>
-<li><strong>AC504</strong>.<a id="ac504"></a> (RABD.2 // CE2e // 3p) A partir del ejercicio <a href="#AC503">AC503</a>, vuelve a indicar la instrucción CREATE TABLE de la tabla PRODUCTO de manera que:
-<ul>
-<li>codFabricante sea una clave ajena que apunta a FABRICANTE.</li>
-<li>al eliminar un fabricante concreto, si hay artículos de dicho fabricante, se deben prohibir la operación. En cambio, si modificamos el código de la tabla FABRICANTE, la clave ajena también cambiará su valor.</li>
-<li>los atributos precioVenta y precioCompra deben de ser mayores de 0.</li>
-</ul>
-</li>
-</ul>
-<p>A continuación, mediante operaciones ALTER TABLE añade las siguientes restricciones:</p>
-<ul>
-<li>La columna PRODUCTO.codFabricante no puede admitir valores nulos.</li>
-<li>El peso debe ser superior o igual a 1.00.</li>
-<li><strong>AR505</strong>. <a id="ar505"></a>(RABD.2 // CE2e // 3p) Mediante <em>MariaDB</em> o <em>PostgreSQL</em>, crea las tablas necesarias para representar que un empleado tiene diferentes números de teléfono que queremos almacenar, teniendo en cuenta que:</li>
-<li>Los teléfonos se presentan mediante un prefijo de tres caracteres y número de 9 dígitos.</li>
-<li>Si eliminamos a un empleado, también eliminaremos todos sus teléfonos.</li>
-</ul>
-<p>Para ello, haciendo uso de la herramienta gráfica apropiada, inserta datos (varios empleados y varios teléfonos para cada empleado) y posteriormente prueba a eliminar un empleado.</p>
-<p>Adjunta tanto los scripts DDL como capturas de las tablas antes y después de realizar la operación de borrado.</p>
+<li>
+<p><strong>AC304</strong>.<a id="AC304"></a> (RABD.2 // CE2e // 3p) A partir del ejercicio <a href="#AC303">AC303</a>, vuelve a indicar la instrucción CREATE TABLE de la tabla PRODUCTO de manera que:</p>
 <ul>
 <li>
-<p><strong>AC506</strong>.<a id="ac506"></a> (RABD.2 // CE2b, CE2c, CE2d // 3p) Crea el siguiente modelo relacional en <em>MariaDB</em> y en <em>PostgreSQL</em>:</p>
+<p>codFabricante sea una clave ajena que apunta a FABRICANTE.</p>
+</li>
+<li>
+<p>al eliminar un fabricante concreto, si hay artículos de dicho fabricante, se deben prohibir la operación. En cambio, si modificamos el código de la tabla FABRICANTE, la clave ajena también cambiará su valor.</p>
+</li>
+<li>
+<p>los atributos precioVenta y precioCompra deben de ser mayores de 0.</p>
+<p>A continuación, mediante operaciones ALTER TABLE añade las siguientes restricciones:</p>
+</li>
+<li>
+<p>La columna PRODUCTO.codFabricante no puede admitir valores nulos.</p>
+</li>
+<li>
+<p>El peso debe ser superior o igual a 1.00.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>AR505</strong>. <a id="ar505"></a>(RABD.2 // CE2e // 3p) Mediante <em>MariaDB</em> o <em>PostgreSQL</em>, crea las tablas necesarias para representar que un empleado tiene diferentes números de teléfono que queremos almacenar, teniendo en cuenta que:</p>
+</li>
+<li>
+<p>Los teléfonos se presentan mediante un prefijo de tres caracteres y número de 9 dígitos.</p>
+</li>
+<li>
+<p>Si eliminamos a un empleado, también eliminaremos todos sus teléfonos.</p>
+</li>
+</ul>
+<p>Para ello, haciendo uso de la herramienta gráfica apropiada, inserta datos (varios empleados y varios teléfonos para cada empleado) y posteriormente prueba a eliminar un empleado.
+Adjunta tanto los scripts DDL como capturas de las tablas antes y después de realizar la operación de borrado.</p>
+<ul>
+<li>
+<p><strong>AC306</strong>.<a id="AC306"></a> (RABD.2 // CE2b, CE2c, CE2d // 3p) Crea el siguiente modelo relacional en <em>MariaDB</em> y en <em>PostgreSQL</em>:</p>
 <p><strong>DEPARTAMENTO</strong> (codD, nombre, direcc)
 · PK: (codD)
 · VNN: (nombre)</p>
-<p><strong>EMPLEADO</strong> (dni, nombrec, salario, direcc, departamento*)
+<p><strong>EMPLEADO</strong> (dni, nombrec, salario, direcc, departamento)
 · PK: (dni)
 · UK: (nombrec)
 · VNN: (nombrec)
@@ -1535,18 +1555,16 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 <li>Elimina la clave ajena de la tabla EMPLEADO.</li>
 <li>Vuelve a añadir la clave ajena, de manera que al modificar un departamento, el cambio se propague en cascada, pero que al eliminarlo, no realice ningún acción.</li>
 </ul>
-</li>
-</ul>
 <p>Finalmente, elimina las tablas creadas.</p>
-<ul>
-<li>
-<p><strong>AP507</strong>.<a id="ap507"></a> (RABD.2 // CE2b, CE2c, CE2d, CE2e // 3p) A partir de la actividad <a href="#AC407">AC407</a> (que a su vez se basa en la <a href="https://aitor-medrano.github.io/bd/02er.html#AC203">AC203</a>), crea las instrucciones DDL necesarias para crear el modelo físico.</p>
 </li>
 <li>
-<p><strong>AP508</strong>. <a id="ap508"></a>(RABD.4 // CE4a // 3p) Haciendo uso de <em>MariaDB</em> y del cliente mariabd, a partir del siguiente <a href="https://aitor-medrano.github.io/bd/resources/ap508.sql"><em>script</em></a> con las instrucciones para crear una base de datos, carga los datos que tienes disponibles en <a href="https://aitor-medrano.github.io/bd/resources/ap508.zip">ap508.zip</a> haciendo uso de las instrucciones LOAD DATA. Finalmente, mediante mysqldump realiza una exportación de toda la base de datos (con los datos cargados), y adjunta tanto los comandos empleados como el resultado de la exportación.</p>
+<p><strong>AP307</strong>.<a id="AP307"></a> (RABD.2 // CE2b, CE2c, CE2d, CE2e // 3p) A partir de la actividad <a href="#AC407">AC407</a> (que a su vez se basa en la <a href="./Modelo%20F%C3%ADsico%20-%20SQL%20-%20Instrucciones%20DDL%20y%20DML%20-%20Bases%20de%20datos_files/02ac203.png">AC203</a>), crea las instrucciones DDL necesarias para crear el modelo físico.</p>
 </li>
 <li>
-<p><strong>AC509</strong>. <a id="ac509"></a> (RABD.4 // CE4a, CE4b // 3p) A partir de la actividad <a href="https://aitor-medrano.github.io/bd/05ddl.html#AC504">AC504</a>, inserta los siguientes datos utilizando las herramientas gráficas, tanto en <em>MariaDB</em> como en <em>PostgreSQL</em>:</p>
+<p><strong>AP308</strong>. <a id="AP308"></a>(RABD.4 // CE4a // 3p) Haciendo uso de <em>MariaDB</em> y del cliente mariabd, a partir del siguiente <a href="Actividades/AP308.sql"><em>script</em></a> con las instrucciones para crear una base de datos, carga los datos que tienes disponibles en <a href="Actividades/AP308.zip">AP308.zip</a> haciendo uso de las instrucciones LOAD DATA. Finalmente, mediante mysqldump realiza una exportación de toda la base de datos (con los datos cargados), y adjunta tanto los comandos empleados como el resultado de la exportación.</p>
+</li>
+<li>
+<p><strong>AC309</strong>. <a id="AC309"></a> (RABD.4 // CE4a, CE4b // 3p) A partir de la actividad <a href="#AC304">AC304</a>, inserta los siguientes datos utilizando las herramientas gráficas, tanto en <em>MariaDB</em> como en <em>PostgreSQL</em>:</p>
 <ul>
 <li>
 <p>FABRICANTE</p>
@@ -1641,7 +1659,7 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 </ul>
 </li>
 <li>
-<p><strong>AC510</strong>.<a id="ac510"></a> (RABD.4 // CE4b // 3p) Carga el siguiente <a href="https://aitor-medrano.github.io/bd/resources/ac510.sql">script de datos</a> sobre las tablas de la <a href="#AC506">AC506</a>, y realiza las siguentes modificaciones:</p>
+<p><strong>AC310</strong>.<a id="AC310"></a> (RABD.4 // CE4b // 3p) Carga el siguiente <a href="Actividades/AC310.sql">script de datos</a> sobre las tablas de la <a href="#AC306">AC306</a>, y realiza las siguentes modificaciones:</p>
 </li>
 <li>
 <p>Añade un nuevo departamento llamado Formación.</p>
@@ -1650,7 +1668,7 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 <p>Renombra el departamento IT por Informática.</p>
 </li>
 <li>
-<p>Añade el campo email al final de la tabla DEPARTAMENTO, y rellenalos todos con email@ac510.com.</p>
+<p>Añade el campo email al final de la tabla DEPARTAMENTO, y rellenalos todos con email@AC310.com.</p>
 </li>
 <li>
 <p>Incrementa el salario de todos los empleados del departamento de informática en 300€.</p>
@@ -1668,10 +1686,10 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 <p>Elimina el departamento Legal. ¿Has podido? ¿Qué ha pasado con sus empleados?</p>
 </li>
 <li>
-<p><strong>AP511</strong>. <a id="ap511"></a> (RABD.4 // CE4b // 3p) Sobre la actividad <a href="#AC510">AC510</a>, añade una nueva tabla DIETAS donde podamos anotar los gastos ocasionados por las dietas de los empleados, como son la fecha, el coste y una descripción de la misma. A continuación, inserta 10 dietas de diferentes empleados. Debes tener en cuenta que si eliminamos un empleado, no debe permitir realizar la operación ni eliminar las dietas, ya que si no, luego no nos cuadraría la contabilidad. ¿Cómo solucionamos dar de baja a un empleado pero no eliminarlo del sistema?</p>
+<p><strong>AP311</strong>. <a id="AP311"></a> (RABD.4 // CE4b // 3p) Sobre la actividad <a href="#AC310">AC310</a>, añade una nueva tabla DIETAS donde podamos anotar los gastos ocasionados por las dietas de los empleados, como son la fecha, el coste y una descripción de la misma. A continuación, inserta 10 dietas de diferentes empleados. Debes tener en cuenta que si eliminamos un empleado, no debe permitir realizar la operación ni eliminar las dietas, ya que si no, luego no nos cuadraría la contabilidad. ¿Cómo solucionamos dar de baja a un empleado pero no eliminarlo del sistema?</p>
 </li>
 <li>
-<p><strong>AR512</strong>.<a id="ar512"></a> (RABD.4 // CE4b // 3p) Carga el <em>script</em> <a href="https://aitor-medrano.github.io/bd/resources/ar512.sql">ar512.sql</a> con el DDL sobre una base de datos de libros y préstmos, y realiza las siguientes operaciones:</p>
+<p><strong>AR512</strong>.<a id="ar512"></a> (RABD.4 // CE4b // 3p) Carga el <em>script</em> <a href="Actividades/ar512.sql">ar512.sql</a> con el DDL sobre una base de datos de libros y préstmos, y realiza las siguientes operaciones:</p>
 </li>
 <li>
 <p>Inserta los siguientes valores en las tablas:</p>
@@ -1753,7 +1771,7 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 </ol>
 </li>
 <li>
-<p><strong>AC513</strong>. <a id="ac513"></a>(RABD.2 // CE2a, CE2b, CE2c, CE2d, CE2e // 3p) A partir del siguiente modelo relacional, genera el script DDL (ac513.sql) para la creación de las tablas mediante <em>MariaDB</em> en una base de datos denominada ac513 (el <em>script</em> debe poder ejecutarse una y otra vez, de manera que si ya existe la base de datos debe borrarla, y para crear cada tabla, debe comprobar que no exista previamente).</p>
+<p><strong>AC313</strong>. <a id="AC313"></a>(RABD.2 // CE2a, CE2b, CE2c, CE2d, CE2e // 3p) A partir del siguiente modelo relacional, genera el script DDL (AC313.sql) para la creación de las tablas mediante <em>MariaDB</em> en una base de datos denominada AC313 (el <em>script</em> debe poder ejecutarse una y otra vez, de manera que si ya existe la base de datos debe borrarla, y para crear cada tabla, debe comprobar que no exista previamente).</p>
 </li>
 </ul>
 <p>El diccionario de datos es el siguiente:</p>
@@ -1883,7 +1901,7 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 <p>Modifica la clave ajena de NOTA hacia ALUMNO para que al realizar un borrado de un alumno, se eliminen todas sus notas.</p>
 </li>
 <li>
-<p><strong>AC514</strong>. <a id="ac514"></a>(RABD.4 // CE4b // 3p) Continua la actividad anterior, y crea el script ac514.sql donde insertes los siguientes datos para el alumnado y los cursos mediante instrucciones INSERT:</p>
+<p><strong>AC314</strong>. <a id="AC314"></a>(RABD.4 // CE4b // 3p) Continua la actividad anterior, y crea el script AC314.sql donde insertes los siguientes datos para el alumnado y los cursos mediante instrucciones INSERT:</p>
 </li>
 <li>
 <p>ALUMNO</p>
@@ -1982,7 +2000,7 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 </table>
 </li>
 </ul>
-<p>A continuación, inserta los siguientes datos de calificaciones mediante LOAD DATA, creando previamente el archivo ac514.csv con la siguiente información:</p>
+<p>A continuación, inserta los siguientes datos de calificaciones mediante LOAD DATA, creando previamente el archivo AC314.csv con la siguiente información:</p>
 <table>
 <thead>
 <tr>
@@ -2062,7 +2080,7 @@ mariadb-dump -u usuario -p --all-databases &gt; dump.sql
 <p>Recuerda que para comprobar los datos que contiene una tabla puedes ejecutar en el cliente SELECT * FROM tabla;</p>
 <ul>
 <li>
-<p><strong>PR515</strong>.<a id="pr515"></a> (RABD.2, RABD.4 // CE2a, CE2b, CE2c, CE2d, CE2e, CE4a, CE4b // 10p) A partir del modelo diseñado en la actividad <a href="#PY414">PY414</a> asociada al primer reto de diseño de la base de datos, ahora nos vamos a centrar en crear el modelo físico y cargar datos para trabajar con él. Para ello, como equipo, deberéis decantaros por un SGBD en concreto.</p>
+<p><strong>pr315</strong>.<a id="pr315"></a> (RABD.2, RABD.4 // CE2a, CE2b, CE2c, CE2d, CE2e, CE4a, CE4b // 10p) A partir del modelo diseñado en la actividad <a href="#PY414">PY414</a> asociada al primer reto de diseño de la base de datos, ahora nos vamos a centrar en crear el modelo físico y cargar datos para trabajar con él. Para ello, como equipo, deberéis decantaros por un SGBD en concreto.</p>
 <p>Para ello, se pide:</p>
 <ul>
 <li>Informe con el modelo ER, el modelo MR y justificacion de las decisiones tomadas respecto a las restricciones incluidas en el modelo físico.</li>
