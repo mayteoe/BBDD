@@ -1,0 +1,28 @@
+﻿1,Alemania,3
+2,Austria,26
+3,Bélgica,5
+4,Bulgaria,23
+5,Chipre,18
+6,Croacia,28
+7,Dinamarca,8
+8,Eslovaquia,4
+9,Eslovenia,14
+10,España,17
+11,Estonia,24
+12,Finlandia,11
+13,Francia,19
+14,Grecia,2
+15,Hungría,7
+16,Irlanda,9
+17,Italia,22
+18,Letonia,21
+19,Lituania,27
+20,Luxemburgo,16
+21,Malta,12
+22,Países Bajos,1
+23,Polonia,25
+24,Portugal,13
+25,Reino Unido,15
+26,República Checa,20
+27,Rumanía,6
+28,Suecia,10
